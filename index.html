@@ -51,8 +51,8 @@
   <div class="app min-h-screen">
     <div class="overflow-hidden border-b border-white/10 bg-black text-[10px] uppercase tracking-[0.32em] text-moth-pink">
       <div class="ticker flex whitespace-nowrap py-2">
-        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Stripe live catalog</span><span class="px-6">Email required</span><span class="px-6">Charlotte first</span>
-        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Stripe live catalog</span><span class="px-6">Email required</span><span class="px-6">Charlotte first</span>
+        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Paper sim is a toy</span><span class="px-6">Live CoinGecko</span><span class="px-6">$10k fake book</span>
+        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Paper sim is a toy</span><span class="px-6">Live CoinGecko</span><span class="px-6">$10k fake book</span>
       </div>
     </div>
     <header class="sticky top-0 z-30 border-b border-white/10 bg-black/80 backdrop-blur">
@@ -64,23 +64,28 @@
             <div class="text-[9px] uppercase tracking-[0.28em] text-gray-500">Made Out The Hood</div>
           </div>
         </button>
-        <button data-go="bag" class="relative rounded-full border border-white/15 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em]">
-          Bag <span id="bagCount" class="ml-1 text-moth-pink">0</span>
-        </button>
+        <div class="flex items-center gap-2">
+          <button data-go="sim" class="rounded-full border border-moth-pink/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-moth-pink">Trade</button>
+          <button data-go="bag" class="relative rounded-full border border-white/15 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em]">
+            Bag <span id="bagCount" class="ml-1 text-moth-pink">0</span>
+          </button>
+        </div>
       </div>
     </header>
+
     <section id="view-home" class="view active">
       <div class="mx-auto max-w-3xl px-4 py-10">
-        <p class="font-display text-[10px] uppercase tracking-[0.4em] text-moth-pink">Live Stripe catalog</p>
+        <p class="font-display text-[10px] uppercase tracking-[0.4em] text-moth-pink">Streetwear + paper book</p>
         <h1 class="mt-3 font-display text-4xl font-black leading-none sm:text-6xl">MADE OUT<br /><span class="text-moth-pink">THE HOOD</span></h1>
-        <p class="mt-4 max-w-md text-sm leading-relaxed text-gray-300">Cocoon, Night Flight, Pulse, Wingspan, Signal. Pay on Stripe. Email required before money moves.</p>
+        <p class="mt-4 max-w-md text-sm leading-relaxed text-gray-300">Shop the drop. Paper-trade BTC ETH SOL XRP DOGE on live CoinGecko prices with a fake $10k. Same toy as the other site. Not a broker.</p>
         <div class="mt-7 flex flex-wrap gap-3">
-          <button data-go="shop" class="rounded-full bg-moth-pink px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em] text-black">Shop the drop</button>
-          <button data-go="waitlist" class="rounded-full border border-white/20 px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em]">Join waitlist</button>
+          <button data-go="shop" class="rounded-full bg-moth-pink px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em] text-black">Shop</button>
+          <button data-go="sim" class="rounded-full border border-white/20 px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em]">Open paper book</button>
         </div>
         <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="MOTH hoodie" class="mt-10 w-full rounded-[2rem] border border-moth-pink/40 object-cover" />
       </div>
     </section>
+
     <section id="view-shop" class="view">
       <div class="mx-auto max-w-3xl px-4 py-8">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">01 // Shop</p>
@@ -88,21 +93,53 @@
         <div id="productGrid" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
       </div>
     </section>
+
     <section id="view-product" class="view">
       <div class="mx-auto max-w-3xl px-4 py-8" id="productDetail"></div>
     </section>
+
     <section id="view-lookbook" class="view">
       <div class="mx-auto max-w-3xl px-4 py-8">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">02 // Lookbook</p>
         <h2 class="mt-2 font-display text-3xl font-black">The silhouette is the logo.</h2>
         <div class="mt-6 grid grid-cols-2 gap-3">
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="Mark" class="h-56 w-full rounded-2xl object-cover" />
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="Look 1" class="h-56 w-full rounded-2xl object-cover object-top" />
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ID79n.jpg" alt="Look 2" class="h-56 w-full rounded-2xl object-cover object-top" />
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ZicEm.jpg" alt="Look 3" class="h-56 w-full rounded-2xl object-cover object-top" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" class="h-56 w-full rounded-2xl object-cover" alt="" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" class="h-56 w-full rounded-2xl object-cover object-top" alt="" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ID79n.jpg" class="h-56 w-full rounded-2xl object-cover object-top" alt="" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ZicEm.jpg" class="h-56 w-full rounded-2xl object-cover object-top" alt="" />
         </div>
       </div>
     </section>
+
+    <section id="view-sim" class="view">
+      <div class="mx-auto max-w-3xl px-4 py-8">
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">Paper book</p>
+            <h2 class="mt-2 font-display text-3xl font-black">Live demo</h2>
+            <p class="mt-2 max-w-xl text-sm text-gray-400">Fake $10,000 vs live CoinGecko. Same book as the other site. Does not make the brand money. Not financial advice.</p>
+          </div>
+          <button id="resetSim" class="text-[11px] uppercase tracking-[0.2em] text-moth-pink">Reset to $10,000</button>
+        </div>
+        <div class="grid gap-3 md:grid-cols-3">
+          <div class="rounded-2xl border border-white/10 bg-black p-4"><div class="text-[10px] uppercase tracking-[0.25em] text-gray-500">Cash</div><div id="cashBal" class="font-display text-2xl">$10,000.00</div></div>
+          <div class="rounded-2xl border border-white/10 bg-black p-4"><div class="text-[10px] uppercase tracking-[0.25em] text-gray-500">Holdings</div><div id="holdBal" class="font-display text-2xl">$0.00</div></div>
+          <div class="rounded-2xl border border-moth-pink/40 bg-black p-4"><div class="text-[10px] uppercase tracking-[0.25em] text-moth-pink">Total</div><div id="totBal" class="font-display text-2xl">$10,000.00</div></div>
+        </div>
+        <div class="mt-6 overflow-x-auto rounded-2xl border border-white/10">
+          <table class="min-w-full text-left text-sm">
+            <thead class="bg-white/5 text-[10px] uppercase tracking-[0.2em] text-gray-500">
+              <tr><th class="px-4 py-3">Asset</th><th class="px-4 py-3">Price</th><th class="px-4 py-3">24h</th><th class="px-4 py-3"></th></tr>
+            </thead>
+            <tbody id="watchBody">
+              <tr><td class="px-4 py-6 text-gray-500" colspan="4">Loading live prices…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[11px] text-gray-600">Paper only. Live prices via CoinGecko. Refreshes every 30s.</p>
+      </div>
+    </section>
+
     <section id="view-waitlist" class="view">
       <div class="mx-auto max-w-md px-4 py-10">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">03 // List</p>
@@ -122,6 +159,7 @@
         </form>
       </div>
     </section>
+
     <section id="view-bag" class="view">
       <div class="mx-auto max-w-md px-4 py-8">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">Bag</p>
@@ -139,14 +177,29 @@
       </div>
     </section>
   </div>
+
   <nav class="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-black/90 backdrop-blur" style="padding-bottom: env(safe-area-inset-bottom)">
     <div class="mx-auto grid max-w-3xl grid-cols-4 text-center text-[10px] uppercase tracking-[0.18em] text-gray-400">
       <button data-go="home" class="tab py-3 tab-active">Home</button>
       <button data-go="shop" class="tab py-3">Shop</button>
-      <button data-go="lookbook" class="tab py-3">Looks</button>
+      <button data-go="sim" class="tab py-3">Trade</button>
       <button data-go="waitlist" class="tab py-3">List</button>
     </div>
   </nav>
+
+  <div id="tradeModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4">
+    <div class="w-full max-w-sm rounded-2xl border border-moth-pink/40 bg-moth-ink p-5">
+      <h3 id="tradeTitle" class="font-display text-lg">Trade</h3>
+      <p id="tradePrice" class="mt-1 text-sm text-gray-400"></p>
+      <input id="tradeAmt" type="number" min="0" step="0.0001" class="mt-4 w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm" placeholder="Amount" />
+      <div class="mt-4 flex gap-2">
+        <button id="buyBtn" class="flex-1 rounded-full bg-moth-pink py-2 text-xs font-black uppercase tracking-[0.2em] text-black">Buy</button>
+        <button id="sellBtn" class="flex-1 rounded-full border border-white/20 py-2 text-xs font-black uppercase tracking-[0.2em]">Sell</button>
+      </div>
+      <button id="closeTrade" class="mt-3 w-full text-[11px] uppercase tracking-[0.2em] text-gray-500">Cancel</button>
+    </div>
+  </div>
+
   <script>
     const IMG = 'https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/';
     const PRODUCTS = [
@@ -243,18 +296,16 @@
       localStorage.setItem('moth_checkout_email', email);
       const first = bag[0];
       if (first.pay) {
-        const url = first.pay + (first.pay.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
-        window.location.href = url;
+        window.location.href = first.pay + (first.pay.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
         return;
       }
-      msg.textContent = 'Stripe products are live. Payment links need write access — approve the Stripe connect link, then I finish checkout.';
+      msg.textContent = 'Stripe products are live. Payment links need write access.';
     });
     document.getElementById('waitlistForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const fd = new FormData(e.target);
-      const row = { email: fd.get('email'), name: fd.get('name'), city: fd.get('city'), size: fd.get('size'), at: new Date().toISOString() };
       const list = JSON.parse(localStorage.getItem(listKey) || '[]');
-      list.push(row);
+      list.push({ email: fd.get('email'), name: fd.get('name'), city: fd.get('city'), size: fd.get('size'), at: new Date().toISOString() });
       localStorage.setItem(listKey, JSON.stringify(list));
       document.getElementById('waitlistMsg').textContent = 'You are on the list.';
       e.target.reset();
@@ -267,5 +318,6 @@
     renderBag();
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
   </script>
+  <script src="./sim.js"></script>
 </body>
 </html>
