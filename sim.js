@@ -1,12 +1,15 @@
 (function () {
   const KEY = 'moth_paper_sim_v1';
   const START = 10000;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const API = window.MOTH_WATCHLIST_API || localStorage.getItem('moth_watchlist_api') || '';
+
   const COINS = [
-    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
-    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
-    { id: 'solana', symbol: 'SOL', name: 'Solana' },
-    { id: 'ripple', symbol: 'XRP', name: 'XRP' },
-    { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin' }
+    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', tv: 'BTCUSDT', exchange: 'BINANCE', type: 'crypto' },
+    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', tv: 'ETHUSDT', exchange: 'BINANCE', type: 'crypto' },
+    { id: 'solana', symbol: 'SOL', name: 'Solana', tv: 'SOLUSDT', exchange: 'BINANCE', type: 'crypto' },
+    { id: 'ripple', symbol: 'XRP', name: 'XRP', tv: 'XRPUSDT', exchange: 'BINANCE', type: 'crypto' },
+    { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', tv: 'DOGEUSDT', exchange: 'BINANCE', type: 'crypto' }
   ];
 
   let prices = {};
@@ -32,6 +35,14 @@
     return Object.entries(s.holdings).reduce((sum, [id, amt]) => sum + amt * (prices[id]?.usd || 0), 0);
   }
 
+  function watchlistPayload() {
+    return COINS.map((c) => ({
+      symbol: c.tv,
+      exchange: c.exchange,
+      type: c.type
+    }));
+  }
+
   function renderBalances() {
     const s = loadSim();
     const hv = holdingsValue(s);
@@ -52,7 +63,8 @@
       const chCls = ch >= 0 ? 'text-emerald-400' : 'text-rose-400';
       const bag = (loadSim().holdings[c.id] || 0);
       return `<tr class="border-t border-white/10">
-        <td class="px-4 py-3">${c.name} <span class="text-gray-500">${c.symbol}</span><div class="text-[10px] text-gray-600">${bag ? bag.toFixed(6) + ' paper' : ''}</div></td>
+        <td class="px-4 py-3">${c.name} <span class="text-gray-500">${c.symbol}</span>
+          <div class="text-[10px] text-gray-600">${c.exchange}:${c.tv}${bag ? ' · ' + bag.toFixed(6) + ' paper' : ''}</div></td>
         <td class="px-4 py-3">${p.usd != null ? money(p.usd) : '—'}</td>
         <td class="px-4 py-3 ${chCls}">${ch == null ? '—' : ch.toFixed(2) + '%'}</td>
         <td class="px-4 py-3"><button data-trade="${c.id}" class="text-[11px] uppercase tracking-[0.2em] text-moth-pink">Trade</button></td>
@@ -63,7 +75,64 @@
     });
   }
 
+  function mountSignup() {
+    const table = document.getElementById('watchBody') && document.getElementById('watchBody').closest('.overflow-x-auto');
+    if (!table || document.getElementById('simEmail')) return;
+    table.insertAdjacentHTML('afterend', `
+      <form id="watchSignup" class="mt-6 space-y-3 rounded-2xl border border-moth-pink/30 bg-black p-4">
+        <p class="font-display text-[10px] uppercase tracking-[0.28em] text-moth-pink">Email required to keep this book</p>
+        <input id="simEmail" type="email" required placeholder="you@domain.com" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
+        <p class="text-[11px] text-gray-500">Saves BTCUSDT ETHUSDT SOLUSDT XRPUSDT DOGEUSDT on BINANCE with your email. Same payload as the Dynamo signup Lambda.</p>
+        <button type="submit" class="w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Save watchlist</button>
+        <p id="watchMsg" class="min-h-[1.25rem] text-center text-sm text-moth-pink"></p>
+      </form>`);
+    const saved = localStorage.getItem('moth_checkout_email') || '';
+    if (saved) document.getElementById('simEmail').value = saved;
+    document.getElementById('watchSignup').addEventListener('submit', submitWatchlist);
+  }
+
+  async function submitWatchlist(e) {
+    e.preventDefault();
+    const email = (document.getElementById('simEmail').value || '').trim().toLowerCase();
+    const msg = document.getElementById('watchMsg');
+    if (!EMAIL_RE.test(email)) {
+      msg.textContent = 'A valid email is required.';
+      return;
+    }
+    const watchlist = watchlistPayload();
+    const payload = { email, watchlist };
+    localStorage.setItem('moth_checkout_email', email);
+    localStorage.setItem('moth_watchlist_v1', JSON.stringify(payload));
+
+    if (!API) {
+      msg.textContent = 'Saved on this device. Add your Lambda URL as MOTH_WATCHLIST_API to push to Dynamo.';
+      return;
+    }
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        msg.textContent = data.error || 'Could not save your signup. Try again.';
+        return;
+      }
+      msg.textContent = data.message || ('Signed up. ' + (data.count || watchlist.length) + ' symbols.');
+    } catch {
+      msg.textContent = 'Could not save your signup. Try again.';
+    }
+  }
+
   function openTrade(id) {
+    const email = (document.getElementById('simEmail') && document.getElementById('simEmail').value || localStorage.getItem('moth_checkout_email') || '').trim();
+    if (!EMAIL_RE.test(email)) {
+      const msg = document.getElementById('watchMsg');
+      if (msg) msg.textContent = 'Email required before you paper-trade.';
+      document.getElementById('simEmail') && document.getElementById('simEmail').focus();
+      return;
+    }
     tradeId = id;
     const coin = COINS.find((c) => c.id === id);
     const modal = document.getElementById('tradeModal');
@@ -120,6 +189,7 @@
   document.getElementById('closeTrade')?.addEventListener('click', closeTrade);
 
   if (document.getElementById('watchBody')) {
+    mountSignup();
     fetchPrices().catch(() => {
       const body = document.getElementById('watchBody');
       if (body) body.innerHTML = '<tr><td class="px-4 py-6 text-gray-500" colspan="4">CoinGecko paused. Refresh in a minute.</td></tr>';
