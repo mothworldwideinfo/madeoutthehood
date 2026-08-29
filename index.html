@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>MOTH — Made Out The Hood</title>
+  <meta name="description" content="MOTH Empire streetwear. Made Out The Hood. Charlotte first. Limited drops." />
+  <meta name="theme-color" content="#ff2d95" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MOTH" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" />
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            moth: { pink: '#ff2d95', hot: '#c026d3', black: '#050505', ink: '#0b0b0f' }
+          },
+          fontFamily: {
+            display: ['Orbitron', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --safe-b: env(safe-area-inset-bottom); }
+    body { background: #050505; }
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        radial-gradient(circle at 18% 0%, rgba(255,45,149,.18), transparent 38%),
+        radial-gradient(circle at 92% 78%, rgba(192,38,211,.12), transparent 34%);
+    }
+    .app { position: relative; z-index: 1; padding-bottom: calc(5.5rem + var(--safe-b)); }
+    .view { display: none; }
+    .view.active { display: block; }
+    .ticker { animation: ticker 26s linear infinite; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .tab-active { color: #ff2d95; }
+  </style>
+</head>
+<body class="bg-moth-black text-white font-body antialiased">
+  <div class="app min-h-screen">
+    <div class="overflow-hidden border-b border-white/10 bg-black text-[10px] uppercase tracking-[0.32em] text-moth-pink">
+      <div class="ticker flex whitespace-nowrap py-2">
+        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Made Out The Hood</span><span class="px-6">Charlotte first</span><span class="px-6">Laurens after</span><span class="px-6">Drop 01 waitlist</span>
+        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Made Out The Hood</span><span class="px-6">Charlotte first</span><span class="px-6">Laurens after</span><span class="px-6">Drop 01 waitlist</span>
+      </div>
+    </div>
+    <header class="sticky top-0 z-30 border-b border-white/10 bg-black/80 backdrop-blur">
+      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+        <button data-go="home" class="flex items-center gap-3 text-left">
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="MOTH" class="h-9 w-9 rounded-full object-cover ring-1 ring-moth-pink/50" />
+          <div>
+            <div class="font-display text-xs tracking-[0.28em]">MOTH</div>
+            <div class="text-[9px] uppercase tracking-[0.28em] text-gray-500">Made Out The Hood</div>
+          </div>
+        </button>
+        <button data-go="bag" class="relative rounded-full border border-white/15 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em]">
+          Bag <span id="bagCount" class="ml-1 text-moth-pink">0</span>
+        </button>
+      </div>
+    </header>
+    <section id="view-home" class="view active">
+      <div class="mx-auto max-w-3xl px-4 py-10">
+        <p class="font-display text-[10px] uppercase tracking-[0.4em] text-moth-pink">Streetwear first</p>
+        <h1 class="mt-3 font-display text-4xl font-black leading-none sm:text-6xl">MADE OUT<br /><span class="text-moth-pink">THE HOOD</span></h1>
+        <p class="mt-4 max-w-md text-sm leading-relaxed text-gray-300">Pink. Raw. Tattoo-true. Limited moth drip out of Charlotte. Get on the list before drop 01 leaves the sample rack.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <button data-go="shop" class="rounded-full bg-moth-pink px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em] text-black">Shop the drop</button>
+          <button data-go="waitlist" class="rounded-full border border-white/20 px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em]">Join waitlist</button>
+        </div>
+        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="Pink MOTH hoodie" class="mt-10 w-full rounded-[2rem] border border-moth-pink/40 object-cover" />
+      </div>
+    </section>
+    <section id="view-shop" class="view">
+      <div class="mx-auto max-w-3xl px-4 py-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">01 // Shop</p>
+        <h2 class="mt-2 font-display text-3xl font-black">First carton</h2>
+        <div id="productGrid" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
+      </div>
+    </section>
+    <section id="view-product" class="view">
+      <div class="mx-auto max-w-3xl px-4 py-8" id="productDetail"></div>
+    </section>
+    <section id="view-lookbook" class="view">
+      <div class="mx-auto max-w-3xl px-4 py-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">02 // Lookbook</p>
+        <h2 class="mt-2 font-display text-3xl font-black">The silhouette is the logo.</h2>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="Mark" class="h-56 w-full rounded-2xl object-cover" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="Look 1" class="h-56 w-full rounded-2xl object-cover object-top" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ID79n.jpg" alt="Look 2" class="h-56 w-full rounded-2xl object-cover object-top" />
+          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ZicEm.jpg" alt="Look 3" class="h-56 w-full rounded-2xl object-cover object-top" />
+        </div>
+      </div>
+    </section>
+    <section id="view-waitlist" class="view">
+      <div class="mx-auto max-w-md px-4 py-10">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">03 // List</p>
+        <h2 class="mt-2 font-display text-3xl font-black">Drop codes only.</h2>
+        <p class="mt-3 text-sm text-gray-400">Size, city, email. Saved on this device. Hook Formspree later if you want it off-phone.</p>
+        <form id="waitlistForm" class="mt-8 space-y-3">
+          <input required type="email" name="email" placeholder="you@domain.com" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
+          <div class="grid grid-cols-2 gap-3">
+            <input type="text" name="name" placeholder="Street name" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
+            <input type="text" name="city" placeholder="Charlotte" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
+          </div>
+          <select name="size" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink">
+            <option value="">Size</option>
+            <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option>
+          </select>
+          <button class="w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Add me</button>
+          <p id="waitlistMsg" class="min-h-[1.25rem] text-center text-sm text-moth-pink"></p>
+        </form>
+      </div>
+    </section>
+    <section id="view-bag" class="view">
+      <div class="mx-auto max-w-md px-4 py-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">Bag</p>
+        <h2 class="mt-2 font-display text-3xl font-black">Your cart</h2>
+        <div id="bagItems" class="mt-6 space-y-3"></div>
+        <div class="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+          <span class="text-xs uppercase tracking-[0.2em] text-gray-500">Total</span>
+          <span id="bagTotal" class="font-display text-xl">$0</span>
+        </div>
+        <button id="checkoutBtn" class="mt-5 w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Checkout (demo)</button>
+        <p id="checkoutMsg" class="mt-3 text-center text-sm text-gray-400"></p>
+      </div>
+    </section>
+  </div>
+  <nav class="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-black/90 backdrop-blur" style="padding-bottom: env(safe-area-inset-bottom)">
+    <div class="mx-auto grid max-w-3xl grid-cols-4 text-center text-[10px] uppercase tracking-[0.18em] text-gray-400">
+      <button data-go="home" class="tab py-3 tab-active">Home</button>
+      <button data-go="shop" class="tab py-3">Shop</button>
+      <button data-go="lookbook" class="tab py-3">Looks</button>
+      <button data-go="waitlist" class="tab py-3">List</button>
+    </div>
+  </nav>
+  <script>
+    const IMG = 'https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/';
+    const PRODUCTS = [
+      { id: 'pink-hoodie', name: 'PINK HOODIE', price: 120, tag: 'Hero', fit: 'Oversized boxy', img: IMG + 'RzxY2.jpg', desc: 'Heavyweight fleece. Distressed moth from the neck tattoo silhouette. First drop hero.' },
+      { id: 'harness', name: 'HARNESS', price: 85, tag: 'Next', fit: 'Adjustable layer', img: IMG + 'ID79n.jpg', desc: 'Club-to-daylight layer. Ships after hoodie proves demand.' },
+      { id: 'crop-glow', name: 'CROP GLOW', price: 68, tag: 'Archive', fit: 'Cropped length', img: IMG + 'ZicEm.jpg', desc: 'Signature neck-moth energy. Not first carton volume.' }
+    ];
+    const bagKey = 'moth_bag_v1';
+    const listKey = 'moth_waitlist_v1';
+    let bag = JSON.parse(localStorage.getItem(bagKey) || '[]');
+    function saveBag() { localStorage.setItem(bagKey, JSON.stringify(bag)); renderBag(); }
+    function go(name, productId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const el = document.getElementById('view-' + name);
+      if (el) el.classList.add('active');
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('tab-active', t.dataset.go === name));
+      window.scrollTo(0, 0);
+      if (name === 'product' && productId) renderProduct(productId);
+    }
+    document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.go)));
+    function renderShop() {
+      document.getElementById('productGrid').innerHTML = PRODUCTS.map(p => `
+        <article class="overflow-hidden rounded-3xl border border-white/10 bg-black">
+          <button class="block w-full text-left" data-open="${p.id}">
+            <img src="${p.img}" alt="${p.name}" class="h-56 w-full object-cover object-top" />
+            <div class="p-4">
+              <div class="text-[10px] uppercase tracking-[0.3em] text-gray-500">${p.tag}</div>
+              <h3 class="mt-1 font-display">${p.name}</h3>
+              <p class="mt-1 text-moth-pink">$${p.price}</p>
+            </div>
+          </button>
+        </article>`).join('');
+      document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => go('product', b.dataset.open)));
+    }
+    function renderProduct(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('productDetail').innerHTML = `
+        <button data-go="shop" class="text-[10px] uppercase tracking-[0.2em] text-gray-500">← Shop</button>
+        <img src="${p.img}" alt="${p.name}" class="mt-4 w-full rounded-[2rem] object-cover object-top" />
+        <p class="mt-5 text-[10px] uppercase tracking-[0.3em] text-moth-pink">${p.tag} · ${p.fit}</p>
+        <h2 class="mt-1 font-display text-3xl font-black">${p.name}</h2>
+        <p class="mt-2 text-xl text-moth-pink">$${p.price}</p>
+        <p class="mt-3 text-sm text-gray-300">${p.desc}</p>
+        <div class="mt-5 grid grid-cols-6 gap-2" id="sizes">
+          ${['XS','S','M','L','XL','2XL'].map(s => `<button data-size="${s}" class="rounded-lg border border-white/15 py-2 text-xs">${s}</button>`).join('')}
+        </div>
+        <button id="addBag" class="mt-5 w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Add to bag</button>`;
+      document.querySelector('#productDetail [data-go]').addEventListener('click', () => go('shop'));
+      let size = 'M';
+      document.querySelectorAll('#sizes [data-size]').forEach(b => {
+        if (b.dataset.size === size) b.classList.add('border-moth-pink', 'text-moth-pink');
+        b.addEventListener('click', () => {
+          size = b.dataset.size;
+          document.querySelectorAll('#sizes [data-size]').forEach(x => x.classList.remove('border-moth-pink', 'text-moth-pink'));
+          b.classList.add('border-moth-pink', 'text-moth-pink');
+        });
+      });
+      document.getElementById('addBag').addEventListener('click', () => {
+        bag.push({ id: p.id, name: p.name, price: p.price, size, img: p.img, qty: 1 });
+        saveBag();
+        go('bag');
+      });
+    }
+    function renderBag() {
+      const count = bag.reduce((n, i) => n + i.qty, 0);
+      document.getElementById('bagCount').textContent = count;
+      const wrap = document.getElementById('bagItems');
+      if (!wrap) return;
+      if (!bag.length) {
+        wrap.innerHTML = '<p class="text-sm text-gray-500">Bag is empty. Pull something from the drop.</p>';
+        document.getElementById('bagTotal').textContent = '$0';
+        return;
+      }
+      wrap.innerHTML = bag.map((i, idx) => `
+        <div class="flex gap-3 rounded-2xl border border-white/10 bg-black p-3">
+          <img src="${i.img}" class="h-16 w-16 rounded-xl object-cover" />
+          <div class="flex-1">
+            <div class="font-display text-sm">${i.name}</div>
+            <div class="text-xs text-gray-500">${i.size} · $${i.price}</div>
+          </div>
+          <button data-rm="${idx}" class="text-xs text-moth-pink">Remove</button>
+        </div>`).join('');
+      wrap.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => { bag.splice(+b.dataset.rm, 1); saveBag(); }));
+      document.getElementById('bagTotal').textContent = '$' + bag.reduce((n, i) => n + i.price * i.qty, 0);
+    }
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      if (!bag.length) { document.getElementById('checkoutMsg').textContent = 'Nothing in the bag.'; return; }
+      document.getElementById('checkoutMsg').textContent = 'Demo checkout locked. Join the waitlist for the real drop.';
+    });
+    document.getElementById('waitlistForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const row = { email: fd.get('email'), name: fd.get('name'), city: fd.get('city'), size: fd.get('size'), at: new Date().toISOString() };
+      const list = JSON.parse(localStorage.getItem(listKey) || '[]');
+      list.push(row);
+      localStorage.setItem(listKey, JSON.stringify(list));
+      document.getElementById('waitlistMsg').textContent = 'You are on the list.';
+      e.target.reset();
+    });
+    renderShop();
+    renderBag();
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+  </script>
+</body>
+</html>
