@@ -3,321 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>MOTH — Made Out The Hood</title>
-  <meta name="description" content="MOTH Empire streetwear. Made Out The Hood. Charlotte first. Limited drops." />
-  <meta name="theme-color" content="#ff2d95" />
+  <title>MOTH EMPIRE // GAME APP</title>
+  <meta name="theme-color" content="#22d3ee" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="MOTH" />
+  <meta name="apple-mobile-web-app-title" content="MOTH EMPIRE" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" />
-  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            moth: { pink: '#ff2d95', hot: '#c026d3', black: '#050505', ink: '#0b0b0f' }
-          },
-          fontFamily: {
-            display: ['Orbitron', 'system-ui', 'sans-serif'],
-            body: ['Inter', 'system-ui', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    :root { --safe-b: env(safe-area-inset-bottom); }
-    body { background: #050505; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(34,211,238,.12), transparent 22%),
+        linear-gradient(180deg, #030712 0%, #060b1d 40%, #02030b 100%);
+      min-height: 100vh;
+    }
     body::before {
       content: '';
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      position: fixed; inset: 0; pointer-events: none;
       background-image:
-        radial-gradient(circle at 18% 0%, rgba(255,45,149,.18), transparent 38%),
-        radial-gradient(circle at 92% 78%, rgba(192,38,211,.12), transparent 34%);
+        radial-gradient(circle at top left, rgba(34,211,238,.16), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,.16), transparent 35%);
     }
-    .app { position: relative; z-index: 1; padding-bottom: calc(5.5rem + var(--safe-b)); }
-    .view { display: none; }
-    .view.active { display: block; }
-    .ticker { animation: ticker 26s linear infinite; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .tab-active { color: #ff2d95; }
+    .font-display { font-family: Orbitron, system-ui, sans-serif; }
+    .glow { box-shadow: 0 0 20px rgba(34,211,238,.45), 0 0 40px rgba(139,92,246,.25); }
   </style>
 </head>
-<body class="bg-moth-black text-white font-body antialiased">
-  <div class="app min-h-screen">
-    <div class="overflow-hidden border-b border-white/10 bg-black text-[10px] uppercase tracking-[0.32em] text-moth-pink">
-      <div class="ticker flex whitespace-nowrap py-2">
-        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Paper sim is a toy</span><span class="px-6">Live CoinGecko</span><span class="px-6">$10k fake book</span>
-        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Paper sim is a toy</span><span class="px-6">Live CoinGecko</span><span class="px-6">$10k fake book</span>
+<body class="text-white">
+  <main class="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
+    <div class="w-full max-w-md rounded-[2rem] border border-cyan-400/40 bg-gradient-to-b from-slate-950 to-black p-8 text-center glow">
+      <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-cyan-400/40 bg-black/70">
+        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="MOTH" class="h-full w-full object-cover" />
       </div>
+      <div class="font-display text-[11px] uppercase tracking-[0.4em] text-cyan-300">MOTH EMPIRE</div>
+      <h1 class="mt-2 font-display text-4xl font-black tracking-wider">GAME APP</h1>
+      <p class="mt-3 text-sm text-gray-300">Create your empire self, unlock packs, and step into the moth journey. Same cosmic server as before.</p>
+      <a href="./game.html" class="mt-6 block rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 font-display text-sm font-black uppercase tracking-[0.3em] text-black glow">ENTER GAME</a>
+      <div class="mt-3 grid grid-cols-2 gap-2">
+        <a href="./shop.html" class="rounded-full border border-white/20 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-gray-300">Shop</a>
+        <a href="./shop.html#sim" class="rounded-full border border-cyan-400/30 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-cyan-300">Paper book</a>
+      </div>
+      <p class="mt-4 text-[11px] uppercase tracking-[0.3em] text-gray-500">Offline-ready • installable • mobile first</p>
     </div>
-    <header class="sticky top-0 z-30 border-b border-white/10 bg-black/80 backdrop-blur">
-      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-        <button data-go="home" class="flex items-center gap-3 text-left">
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="MOTH" class="h-9 w-9 rounded-full object-cover ring-1 ring-moth-pink/50" />
-          <div>
-            <div class="font-display text-xs tracking-[0.28em]">MOTH</div>
-            <div class="text-[9px] uppercase tracking-[0.28em] text-gray-500">Made Out The Hood</div>
-          </div>
-        </button>
-        <div class="flex items-center gap-2">
-          <button data-go="sim" class="rounded-full border border-moth-pink/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-moth-pink">Trade</button>
-          <button data-go="bag" class="relative rounded-full border border-white/15 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em]">
-            Bag <span id="bagCount" class="ml-1 text-moth-pink">0</span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <section id="view-home" class="view active">
-      <div class="mx-auto max-w-3xl px-4 py-10">
-        <p class="font-display text-[10px] uppercase tracking-[0.4em] text-moth-pink">Streetwear + paper book</p>
-        <h1 class="mt-3 font-display text-4xl font-black leading-none sm:text-6xl">MADE OUT<br /><span class="text-moth-pink">THE HOOD</span></h1>
-        <p class="mt-4 max-w-md text-sm leading-relaxed text-gray-300">Shop the drop. Paper-trade BTC ETH SOL XRP DOGE on live CoinGecko prices with a fake $10k. Same toy as the other site. Not a broker.</p>
-        <div class="mt-7 flex flex-wrap gap-3">
-          <button data-go="shop" class="rounded-full bg-moth-pink px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em] text-black">Shop</button>
-          <button data-go="sim" class="rounded-full border border-white/20 px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em]">Open paper book</button>
-        </div>
-        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="MOTH hoodie" class="mt-10 w-full rounded-[2rem] border border-moth-pink/40 object-cover" />
-      </div>
-    </section>
-
-    <section id="view-shop" class="view">
-      <div class="mx-auto max-w-3xl px-4 py-8">
-        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">01 // Shop</p>
-        <h2 class="mt-2 font-display text-3xl font-black">Stripe pieces</h2>
-        <div id="productGrid" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
-      </div>
-    </section>
-
-    <section id="view-product" class="view">
-      <div class="mx-auto max-w-3xl px-4 py-8" id="productDetail"></div>
-    </section>
-
-    <section id="view-lookbook" class="view">
-      <div class="mx-auto max-w-3xl px-4 py-8">
-        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">02 // Lookbook</p>
-        <h2 class="mt-2 font-display text-3xl font-black">The silhouette is the logo.</h2>
-        <div class="mt-6 grid grid-cols-2 gap-3">
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" class="h-56 w-full rounded-2xl object-cover" alt="" />
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" class="h-56 w-full rounded-2xl object-cover object-top" alt="" />
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ID79n.jpg" class="h-56 w-full rounded-2xl object-cover object-top" alt="" />
-          <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/ZicEm.jpg" class="h-56 w-full rounded-2xl object-cover object-top" alt="" />
-        </div>
-      </div>
-    </section>
-
-    <section id="view-sim" class="view">
-      <div class="mx-auto max-w-3xl px-4 py-8">
-        <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">Paper book</p>
-            <h2 class="mt-2 font-display text-3xl font-black">Live demo</h2>
-            <p class="mt-2 max-w-xl text-sm text-gray-400">Fake $10,000 vs live CoinGecko. Same book as the other site. Does not make the brand money. Not financial advice.</p>
-          </div>
-          <button id="resetSim" class="text-[11px] uppercase tracking-[0.2em] text-moth-pink">Reset to $10,000</button>
-        </div>
-        <div class="grid gap-3 md:grid-cols-3">
-          <div class="rounded-2xl border border-white/10 bg-black p-4"><div class="text-[10px] uppercase tracking-[0.25em] text-gray-500">Cash</div><div id="cashBal" class="font-display text-2xl">$10,000.00</div></div>
-          <div class="rounded-2xl border border-white/10 bg-black p-4"><div class="text-[10px] uppercase tracking-[0.25em] text-gray-500">Holdings</div><div id="holdBal" class="font-display text-2xl">$0.00</div></div>
-          <div class="rounded-2xl border border-moth-pink/40 bg-black p-4"><div class="text-[10px] uppercase tracking-[0.25em] text-moth-pink">Total</div><div id="totBal" class="font-display text-2xl">$10,000.00</div></div>
-        </div>
-        <div class="mt-6 overflow-x-auto rounded-2xl border border-white/10">
-          <table class="min-w-full text-left text-sm">
-            <thead class="bg-white/5 text-[10px] uppercase tracking-[0.2em] text-gray-500">
-              <tr><th class="px-4 py-3">Asset</th><th class="px-4 py-3">Price</th><th class="px-4 py-3">24h</th><th class="px-4 py-3"></th></tr>
-            </thead>
-            <tbody id="watchBody">
-              <tr><td class="px-4 py-6 text-gray-500" colspan="4">Loading live prices…</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="mt-3 text-[11px] text-gray-600">Paper only. Live prices via CoinGecko. Refreshes every 30s.</p>
-      </div>
-    </section>
-
-    <section id="view-waitlist" class="view">
-      <div class="mx-auto max-w-md px-4 py-10">
-        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">03 // List</p>
-        <h2 class="mt-2 font-display text-3xl font-black">Drop codes only.</h2>
-        <form id="waitlistForm" class="mt-8 space-y-3">
-          <input required type="email" name="email" placeholder="you@domain.com" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
-          <div class="grid grid-cols-2 gap-3">
-            <input type="text" name="name" placeholder="Street name" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
-            <input type="text" name="city" placeholder="Charlotte" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
-          </div>
-          <select name="size" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink">
-            <option value="">Size</option>
-            <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option>
-          </select>
-          <button class="w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Add me</button>
-          <p id="waitlistMsg" class="min-h-[1.25rem] text-center text-sm text-moth-pink"></p>
-        </form>
-      </div>
-    </section>
-
-    <section id="view-bag" class="view">
-      <div class="mx-auto max-w-md px-4 py-8">
-        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">Bag</p>
-        <h2 class="mt-2 font-display text-3xl font-black">Pay on Stripe</h2>
-        <div id="bagItems" class="mt-6 space-y-3"></div>
-        <div class="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
-          <span class="text-xs uppercase tracking-[0.2em] text-gray-500">Total</span>
-          <span id="bagTotal" class="font-display text-xl">$0</span>
-        </div>
-        <label class="mt-5 block text-[11px] uppercase tracking-[0.2em] text-gray-400">Email required
-          <input id="checkoutEmail" type="email" required placeholder="you@domain.com" class="mt-1 w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
-        </label>
-        <button id="checkoutBtn" class="mt-4 w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Pay with Stripe</button>
-        <p id="checkoutMsg" class="mt-3 text-center text-sm text-gray-400"></p>
-      </div>
-    </section>
-  </div>
-
-  <nav class="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-black/90 backdrop-blur" style="padding-bottom: env(safe-area-inset-bottom)">
-    <div class="mx-auto grid max-w-3xl grid-cols-4 text-center text-[10px] uppercase tracking-[0.18em] text-gray-400">
-      <button data-go="home" class="tab py-3 tab-active">Home</button>
-      <button data-go="shop" class="tab py-3">Shop</button>
-      <button data-go="sim" class="tab py-3">Trade</button>
-      <button data-go="waitlist" class="tab py-3">List</button>
-    </div>
-  </nav>
-
-  <div id="tradeModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4">
-    <div class="w-full max-w-sm rounded-2xl border border-moth-pink/40 bg-moth-ink p-5">
-      <h3 id="tradeTitle" class="font-display text-lg">Trade</h3>
-      <p id="tradePrice" class="mt-1 text-sm text-gray-400"></p>
-      <input id="tradeAmt" type="number" min="0" step="0.0001" class="mt-4 w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm" placeholder="Amount" />
-      <div class="mt-4 flex gap-2">
-        <button id="buyBtn" class="flex-1 rounded-full bg-moth-pink py-2 text-xs font-black uppercase tracking-[0.2em] text-black">Buy</button>
-        <button id="sellBtn" class="flex-1 rounded-full border border-white/20 py-2 text-xs font-black uppercase tracking-[0.2em]">Sell</button>
-      </div>
-      <button id="closeTrade" class="mt-3 w-full text-[11px] uppercase tracking-[0.2em] text-gray-500">Cancel</button>
-    </div>
-  </div>
-
-  <script>
-    const IMG = 'https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/';
-    const PRODUCTS = [
-      { id: 'cocoon-hoodie', name: 'COCOON HOODIE', price: 118, tag: 'Hero', fit: 'Oversized fleece', img: IMG + 'RzxY2.jpg', desc: 'Hero hoodie. Live on Stripe.', priceId: 'price_1U9HCm75ulz0jhP82MdxezLE', pay: '' },
-      { id: 'night-flight-zip', name: 'NIGHT FLIGHT ZIP', price: 108, tag: 'Layer', fit: 'Zip layer', img: IMG + 'ID79n.jpg', desc: 'Zip piece. Live on Stripe.', priceId: 'price_1U9HEG75ulz0jhP89UP7csOo', pay: '' },
-      { id: 'pulse-baby-tee', name: 'PULSE BABY TEE', price: 48, tag: 'Tee', fit: 'Cropped tee', img: IMG + 'ZicEm.jpg', desc: 'Baby tee. Live on Stripe.', priceId: 'price_1U9HGG75ulz0jhP8LVhvrKgo', pay: '' },
-      { id: 'wingspan-tee', name: 'WINGSPAN TEE', price: 48, tag: 'Tee', fit: 'Classic tee', img: IMG + 'DJ2fR.jpg', desc: 'Tee. Live on Stripe.', priceId: 'price_1U9HHG75ulz0jhP8G7TCTmoU', pay: '' },
-      { id: 'signal-tee', name: 'SIGNAL TEE', price: 48, tag: 'Tee', fit: 'Classic tee', img: IMG + 'DJ2fR.jpg', desc: 'Tee. Live on Stripe.', priceId: 'price_1U9HI475ulz0jhP8VuOUGvhw', pay: '' }
-    ];
-    const bagKey = 'moth_bag_v2';
-    const listKey = 'moth_waitlist_v1';
-    let bag = JSON.parse(localStorage.getItem(bagKey) || '[]');
-    function saveBag() { localStorage.setItem(bagKey, JSON.stringify(bag)); renderBag(); }
-    function go(name, productId) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      const el = document.getElementById('view-' + name);
-      if (el) el.classList.add('active');
-      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('tab-active', t.dataset.go === name));
-      window.scrollTo(0, 0);
-      if (name === 'product' && productId) renderProduct(productId);
-    }
-    document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.go)));
-    function renderShop() {
-      document.getElementById('productGrid').innerHTML = PRODUCTS.map(p => `
-        <article class="overflow-hidden rounded-3xl border border-white/10 bg-black">
-          <button class="block w-full text-left" data-open="${p.id}">
-            <img src="${p.img}" alt="${p.name}" class="h-56 w-full object-cover object-top" />
-            <div class="p-4">
-              <div class="text-[10px] uppercase tracking-[0.3em] text-gray-500">${p.tag}</div>
-              <h3 class="mt-1 font-display">${p.name}</h3>
-              <p class="mt-1 text-moth-pink">$${p.price}</p>
-            </div>
-          </button>
-        </article>`).join('');
-      document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => go('product', b.dataset.open)));
-    }
-    function renderProduct(id) {
-      const p = PRODUCTS.find(x => x.id === id);
-      if (!p) return;
-      document.getElementById('productDetail').innerHTML = `
-        <button data-go="shop" class="text-[10px] uppercase tracking-[0.2em] text-gray-500">← Shop</button>
-        <img src="${p.img}" alt="${p.name}" class="mt-4 w-full rounded-[2rem] object-cover object-top" />
-        <p class="mt-5 text-[10px] uppercase tracking-[0.3em] text-moth-pink">${p.tag} · ${p.fit}</p>
-        <h2 class="mt-1 font-display text-3xl font-black">${p.name}</h2>
-        <p class="mt-2 text-xl text-moth-pink">$${p.price}</p>
-        <p class="mt-3 text-sm text-gray-300">${p.desc}</p>
-        <div class="mt-5 grid grid-cols-6 gap-2" id="sizes">
-          ${['XS','S','M','L','XL','2XL'].map(s => `<button data-size="${s}" class="rounded-lg border border-white/15 py-2 text-xs">${s}</button>`).join('')}
-        </div>
-        <button id="addBag" class="mt-5 w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Add to bag</button>`;
-      document.querySelector('#productDetail [data-go]').addEventListener('click', () => go('shop'));
-      let size = 'M';
-      document.querySelectorAll('#sizes [data-size]').forEach(b => {
-        if (b.dataset.size === size) b.classList.add('border-moth-pink', 'text-moth-pink');
-        b.addEventListener('click', () => {
-          size = b.dataset.size;
-          document.querySelectorAll('#sizes [data-size]').forEach(x => x.classList.remove('border-moth-pink', 'text-moth-pink'));
-          b.classList.add('border-moth-pink', 'text-moth-pink');
-        });
-      });
-      document.getElementById('addBag').addEventListener('click', () => {
-        bag.push({ id: p.id, name: p.name, price: p.price, size, img: p.img, qty: 1, priceId: p.priceId, pay: p.pay });
-        saveBag();
-        go('bag');
-      });
-    }
-    function renderBag() {
-      const count = bag.reduce((n, i) => n + i.qty, 0);
-      document.getElementById('bagCount').textContent = count;
-      const wrap = document.getElementById('bagItems');
-      if (!wrap) return;
-      if (!bag.length) {
-        wrap.innerHTML = '<p class="text-sm text-gray-500">Bag is empty.</p>';
-        document.getElementById('bagTotal').textContent = '$0';
-        return;
-      }
-      wrap.innerHTML = bag.map((i, idx) => `
-        <div class="flex gap-3 rounded-2xl border border-white/10 bg-black p-3">
-          <img src="${i.img}" class="h-16 w-16 rounded-xl object-cover" />
-          <div class="flex-1">
-            <div class="font-display text-sm">${i.name}</div>
-            <div class="text-xs text-gray-500">${i.size} · $${i.price}</div>
-          </div>
-          <button data-rm="${idx}" class="text-xs text-moth-pink">Remove</button>
-        </div>`).join('');
-      wrap.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => { bag.splice(+b.dataset.rm, 1); saveBag(); }));
-      document.getElementById('bagTotal').textContent = '$' + bag.reduce((n, i) => n + i.price * i.qty, 0);
-    }
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      const email = (document.getElementById('checkoutEmail').value || '').trim();
-      const msg = document.getElementById('checkoutMsg');
-      if (!bag.length) { msg.textContent = 'Nothing in the bag.'; return; }
-      if (!email || !email.includes('@')) { msg.textContent = 'Email required before Stripe.'; return; }
-      localStorage.setItem('moth_checkout_email', email);
-      const first = bag[0];
-      if (first.pay) {
-        window.location.href = first.pay + (first.pay.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
-        return;
-      }
-      msg.textContent = 'Stripe products are live. Payment links need write access.';
-    });
-    document.getElementById('waitlistForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const list = JSON.parse(localStorage.getItem(listKey) || '[]');
-      list.push({ email: fd.get('email'), name: fd.get('name'), city: fd.get('city'), size: fd.get('size'), at: new Date().toISOString() });
-      localStorage.setItem(listKey, JSON.stringify(list));
-      document.getElementById('waitlistMsg').textContent = 'You are on the list.';
-      e.target.reset();
-    });
-    if (new URLSearchParams(location.search).get('paid') === '1') {
-      localStorage.removeItem(bagKey);
-      bag = [];
-    }
-    renderShop();
-    renderBag();
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
-  </script>
-  <script src="./sim.js"></script>
+  </main>
 </body>
 </html>
