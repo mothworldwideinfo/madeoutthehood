@@ -51,8 +51,8 @@
   <div class="app min-h-screen">
     <div class="overflow-hidden border-b border-white/10 bg-black text-[10px] uppercase tracking-[0.32em] text-moth-pink">
       <div class="ticker flex whitespace-nowrap py-2">
-        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Made Out The Hood</span><span class="px-6">Charlotte first</span><span class="px-6">Laurens after</span><span class="px-6">Drop 01 waitlist</span>
-        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Made Out The Hood</span><span class="px-6">Charlotte first</span><span class="px-6">Laurens after</span><span class="px-6">Drop 01 waitlist</span>
+        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Stripe live catalog</span><span class="px-6">Email required</span><span class="px-6">Charlotte first</span>
+        <span class="px-6">MOTH EMPIRE</span><span class="px-6">Stripe live catalog</span><span class="px-6">Email required</span><span class="px-6">Charlotte first</span>
       </div>
     </div>
     <header class="sticky top-0 z-30 border-b border-white/10 bg-black/80 backdrop-blur">
@@ -71,20 +71,20 @@
     </header>
     <section id="view-home" class="view active">
       <div class="mx-auto max-w-3xl px-4 py-10">
-        <p class="font-display text-[10px] uppercase tracking-[0.4em] text-moth-pink">Streetwear first</p>
+        <p class="font-display text-[10px] uppercase tracking-[0.4em] text-moth-pink">Live Stripe catalog</p>
         <h1 class="mt-3 font-display text-4xl font-black leading-none sm:text-6xl">MADE OUT<br /><span class="text-moth-pink">THE HOOD</span></h1>
-        <p class="mt-4 max-w-md text-sm leading-relaxed text-gray-300">Pink. Raw. Tattoo-true. Limited moth drip out of Charlotte. Get on the list before drop 01 leaves the sample rack.</p>
+        <p class="mt-4 max-w-md text-sm leading-relaxed text-gray-300">Cocoon, Night Flight, Pulse, Wingspan, Signal. Pay on Stripe. Email required before money moves.</p>
         <div class="mt-7 flex flex-wrap gap-3">
           <button data-go="shop" class="rounded-full bg-moth-pink px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em] text-black">Shop the drop</button>
           <button data-go="waitlist" class="rounded-full border border-white/20 px-6 py-3 font-display text-xs font-black uppercase tracking-[0.22em]">Join waitlist</button>
         </div>
-        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="Pink MOTH hoodie" class="mt-10 w-full rounded-[2rem] border border-moth-pink/40 object-cover" />
+        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/RzxY2.jpg" alt="MOTH hoodie" class="mt-10 w-full rounded-[2rem] border border-moth-pink/40 object-cover" />
       </div>
     </section>
     <section id="view-shop" class="view">
       <div class="mx-auto max-w-3xl px-4 py-8">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">01 // Shop</p>
-        <h2 class="mt-2 font-display text-3xl font-black">First carton</h2>
+        <h2 class="mt-2 font-display text-3xl font-black">Stripe pieces</h2>
         <div id="productGrid" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
       </div>
     </section>
@@ -107,7 +107,6 @@
       <div class="mx-auto max-w-md px-4 py-10">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">03 // List</p>
         <h2 class="mt-2 font-display text-3xl font-black">Drop codes only.</h2>
-        <p class="mt-3 text-sm text-gray-400">Size, city, email. Saved on this device. Hook Formspree later if you want it off-phone.</p>
         <form id="waitlistForm" class="mt-8 space-y-3">
           <input required type="email" name="email" placeholder="you@domain.com" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
           <div class="grid grid-cols-2 gap-3">
@@ -126,13 +125,16 @@
     <section id="view-bag" class="view">
       <div class="mx-auto max-w-md px-4 py-8">
         <p class="font-display text-[10px] uppercase tracking-[0.35em] text-moth-pink">Bag</p>
-        <h2 class="mt-2 font-display text-3xl font-black">Your cart</h2>
+        <h2 class="mt-2 font-display text-3xl font-black">Pay on Stripe</h2>
         <div id="bagItems" class="mt-6 space-y-3"></div>
         <div class="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
           <span class="text-xs uppercase tracking-[0.2em] text-gray-500">Total</span>
           <span id="bagTotal" class="font-display text-xl">$0</span>
         </div>
-        <button id="checkoutBtn" class="mt-5 w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Checkout (demo)</button>
+        <label class="mt-5 block text-[11px] uppercase tracking-[0.2em] text-gray-400">Email required
+          <input id="checkoutEmail" type="email" required placeholder="you@domain.com" class="mt-1 w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
+        </label>
+        <button id="checkoutBtn" class="mt-4 w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Pay with Stripe</button>
         <p id="checkoutMsg" class="mt-3 text-center text-sm text-gray-400"></p>
       </div>
     </section>
@@ -148,11 +150,13 @@
   <script>
     const IMG = 'https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/';
     const PRODUCTS = [
-      { id: 'pink-hoodie', name: 'PINK HOODIE', price: 120, tag: 'Hero', fit: 'Oversized boxy', img: IMG + 'RzxY2.jpg', desc: 'Heavyweight fleece. Distressed moth from the neck tattoo silhouette. First drop hero.' },
-      { id: 'harness', name: 'HARNESS', price: 85, tag: 'Next', fit: 'Adjustable layer', img: IMG + 'ID79n.jpg', desc: 'Club-to-daylight layer. Ships after hoodie proves demand.' },
-      { id: 'crop-glow', name: 'CROP GLOW', price: 68, tag: 'Archive', fit: 'Cropped length', img: IMG + 'ZicEm.jpg', desc: 'Signature neck-moth energy. Not first carton volume.' }
+      { id: 'cocoon-hoodie', name: 'COCOON HOODIE', price: 118, tag: 'Hero', fit: 'Oversized fleece', img: IMG + 'RzxY2.jpg', desc: 'Hero hoodie. Live on Stripe.', priceId: 'price_1U9HCm75ulz0jhP82MdxezLE', pay: '' },
+      { id: 'night-flight-zip', name: 'NIGHT FLIGHT ZIP', price: 108, tag: 'Layer', fit: 'Zip layer', img: IMG + 'ID79n.jpg', desc: 'Zip piece. Live on Stripe.', priceId: 'price_1U9HEG75ulz0jhP89UP7csOo', pay: '' },
+      { id: 'pulse-baby-tee', name: 'PULSE BABY TEE', price: 48, tag: 'Tee', fit: 'Cropped tee', img: IMG + 'ZicEm.jpg', desc: 'Baby tee. Live on Stripe.', priceId: 'price_1U9HGG75ulz0jhP8LVhvrKgo', pay: '' },
+      { id: 'wingspan-tee', name: 'WINGSPAN TEE', price: 48, tag: 'Tee', fit: 'Classic tee', img: IMG + 'DJ2fR.jpg', desc: 'Tee. Live on Stripe.', priceId: 'price_1U9HHG75ulz0jhP8G7TCTmoU', pay: '' },
+      { id: 'signal-tee', name: 'SIGNAL TEE', price: 48, tag: 'Tee', fit: 'Classic tee', img: IMG + 'DJ2fR.jpg', desc: 'Tee. Live on Stripe.', priceId: 'price_1U9HI475ulz0jhP8VuOUGvhw', pay: '' }
     ];
-    const bagKey = 'moth_bag_v1';
+    const bagKey = 'moth_bag_v2';
     const listKey = 'moth_waitlist_v1';
     let bag = JSON.parse(localStorage.getItem(bagKey) || '[]');
     function saveBag() { localStorage.setItem(bagKey, JSON.stringify(bag)); renderBag(); }
@@ -204,7 +208,7 @@
         });
       });
       document.getElementById('addBag').addEventListener('click', () => {
-        bag.push({ id: p.id, name: p.name, price: p.price, size, img: p.img, qty: 1 });
+        bag.push({ id: p.id, name: p.name, price: p.price, size, img: p.img, qty: 1, priceId: p.priceId, pay: p.pay });
         saveBag();
         go('bag');
       });
@@ -215,7 +219,7 @@
       const wrap = document.getElementById('bagItems');
       if (!wrap) return;
       if (!bag.length) {
-        wrap.innerHTML = '<p class="text-sm text-gray-500">Bag is empty. Pull something from the drop.</p>';
+        wrap.innerHTML = '<p class="text-sm text-gray-500">Bag is empty.</p>';
         document.getElementById('bagTotal').textContent = '$0';
         return;
       }
@@ -232,8 +236,18 @@
       document.getElementById('bagTotal').textContent = '$' + bag.reduce((n, i) => n + i.price * i.qty, 0);
     }
     document.getElementById('checkoutBtn').addEventListener('click', () => {
-      if (!bag.length) { document.getElementById('checkoutMsg').textContent = 'Nothing in the bag.'; return; }
-      document.getElementById('checkoutMsg').textContent = 'Demo checkout locked. Join the waitlist for the real drop.';
+      const email = (document.getElementById('checkoutEmail').value || '').trim();
+      const msg = document.getElementById('checkoutMsg');
+      if (!bag.length) { msg.textContent = 'Nothing in the bag.'; return; }
+      if (!email || !email.includes('@')) { msg.textContent = 'Email required before Stripe.'; return; }
+      localStorage.setItem('moth_checkout_email', email);
+      const first = bag[0];
+      if (first.pay) {
+        const url = first.pay + (first.pay.includes('?') ? '&' : '?') + 'prefilled_email=' + encodeURIComponent(email);
+        window.location.href = url;
+        return;
+      }
+      msg.textContent = 'Stripe products are live. Payment links need write access — approve the Stripe connect link, then I finish checkout.';
     });
     document.getElementById('waitlistForm').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -245,6 +259,10 @@
       document.getElementById('waitlistMsg').textContent = 'You are on the list.';
       e.target.reset();
     });
+    if (new URLSearchParams(location.search).get('paid') === '1') {
+      localStorage.removeItem(bagKey);
+      bag = [];
+    }
     renderShop();
     renderBag();
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
