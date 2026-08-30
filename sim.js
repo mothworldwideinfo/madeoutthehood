@@ -1,200 +1,227 @@
-(function () {
-  const KEY = 'moth_paper_sim_v1';
-  const START = 10000;
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const API = window.MOTH_WATCHLIST_API || localStorage.getItem('moth_watchlist_api') || '';
+(() => {
+  const STORAGE_KEY = 'sunshare_state_v1';
 
-  const COINS = [
-    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', tv: 'BTCUSDT', exchange: 'BINANCE', type: 'crypto' },
-    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', tv: 'ETHUSDT', exchange: 'BINANCE', type: 'crypto' },
-    { id: 'solana', symbol: 'SOL', name: 'Solana', tv: 'SOLUSDT', exchange: 'BINANCE', type: 'crypto' },
-    { id: 'ripple', symbol: 'XRP', name: 'XRP', tv: 'XRPUSDT', exchange: 'BINANCE', type: 'crypto' },
-    { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', tv: 'DOGEUSDT', exchange: 'BINANCE', type: 'crypto' }
-  ];
+  const initialState = {
+    roofSize: 300,
+    sunHours: 5.5,
+    donationRate: 60,
+    priority: 'family',
+    generatedKwh: 18,
+    donatedKwh: 10.8,
+    savedCost: 18,
+    peopleHelped: 12,
+    batteryLevel: 68,
+    lastUpdated: Date.now()
+  };
 
-  let prices = {};
-  let tradeId = null;
-
-  function loadSim() {
+  function readState() {
     try {
-      return JSON.parse(localStorage.getItem(KEY)) || { cash: START, holdings: {} };
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      return raw && typeof raw === 'object' ? { ...initialState, ...raw } : { ...initialState };
     } catch {
-      return { cash: START, holdings: {} };
+      return { ...initialState };
     }
   }
 
-  function saveSim(s) {
-    localStorage.setItem(KEY, JSON.stringify(s));
+  function writeState(nextState) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
   }
 
-  function money(n) {
-    return n.toLocaleString(undefined, { style: 'currency', currency: 'USD' });
+  function formatKwh(value) {
+    return `${Number(value).toFixed(1)} kWh`;
   }
 
-  function holdingsValue(s) {
-    return Object.entries(s.holdings).reduce((sum, [id, amt]) => sum + amt * (prices[id]?.usd || 0), 0);
+  function formatCurrency(value) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0
+    }).format(value);
   }
 
-  function watchlistPayload() {
-    return COINS.map((c) => ({
-      symbol: c.tv,
-      exchange: c.exchange,
-      type: c.type
-    }));
+  function calculateImpact(state) {
+    const panelsPerSqft = 0.11;
+    const efficiency = 0.82;
+    const generated = state.roofSize * panelsPerSqft * state.sunHours * efficiency;
+    const donated = generated * (state.donationRate / 100);
+    const savedCost = generated * 0.95;
+    const batteryLevel = Math.min(99, Math.max(22, Math.round((state.sunHours / 9) * 100)));
+    const peopleHelped = Math.max(3, Math.round(donated / 1.8));
+
+    return {
+      generated,
+      donated,
+      savedCost,
+      batteryLevel,
+      peopleHelped
+    };
   }
 
-  function renderBalances() {
-    const s = loadSim();
-    const hv = holdingsValue(s);
-    const cash = document.getElementById('cashBal');
-    const hold = document.getElementById('holdBal');
-    const tot = document.getElementById('totBal');
-    if (cash) cash.textContent = money(s.cash);
-    if (hold) hold.textContent = money(hv);
-    if (tot) tot.textContent = money(s.cash + hv);
-  }
-
-  function renderWatch() {
-    const body = document.getElementById('watchBody');
-    if (!body) return;
-    body.innerHTML = COINS.map((c) => {
-      const p = prices[c.id] || {};
-      const ch = p.usd_24h_change;
-      const chCls = ch >= 0 ? 'text-emerald-400' : 'text-rose-400';
-      const bag = (loadSim().holdings[c.id] || 0);
-      return `<tr class="border-t border-white/10">
-        <td class="px-4 py-3">${c.name} <span class="text-gray-500">${c.symbol}</span>
-          <div class="text-[10px] text-gray-600">${c.exchange}:${c.tv}${bag ? ' · ' + bag.toFixed(6) + ' paper' : ''}</div></td>
-        <td class="px-4 py-3">${p.usd != null ? money(p.usd) : '—'}</td>
-        <td class="px-4 py-3 ${chCls}">${ch == null ? '—' : ch.toFixed(2) + '%'}</td>
-        <td class="px-4 py-3"><button data-trade="${c.id}" class="text-[11px] uppercase tracking-[0.2em] text-moth-pink">Trade</button></td>
-      </tr>`;
-    }).join('');
-    body.querySelectorAll('[data-trade]').forEach((btn) => {
-      btn.onclick = () => openTrade(btn.dataset.trade);
+  function updatePriorityButtons(activePriority) {
+    document.querySelectorAll('.toggle').forEach((button) => {
+      const isActive = button.dataset.priority === activePriority;
+      button.classList.toggle('active', isActive);
     });
   }
 
-  function mountSignup() {
-    const table = document.getElementById('watchBody') && document.getElementById('watchBody').closest('.overflow-x-auto');
-    if (!table || document.getElementById('simEmail')) return;
-    table.insertAdjacentHTML('afterend', `
-      <form id="watchSignup" class="mt-6 space-y-3 rounded-2xl border border-moth-pink/30 bg-black p-4">
-        <p class="font-display text-[10px] uppercase tracking-[0.28em] text-moth-pink">Email required to keep this book</p>
-        <input id="simEmail" type="email" required placeholder="you@domain.com" class="w-full rounded-xl border border-white/15 bg-black px-4 py-3 text-sm outline-none focus:border-moth-pink" />
-        <p class="text-[11px] text-gray-500">Saves BTCUSDT ETHUSDT SOLUSDT XRPUSDT DOGEUSDT on BINANCE with your email. Same payload as the Dynamo signup Lambda.</p>
-        <button type="submit" class="w-full rounded-full bg-moth-pink py-3 font-display text-xs font-black uppercase tracking-[0.28em] text-black">Save watchlist</button>
-        <p id="watchMsg" class="min-h-[1.25rem] text-center text-sm text-moth-pink"></p>
-      </form>`);
-    const saved = localStorage.getItem('moth_checkout_email') || '';
-    if (saved) document.getElementById('simEmail').value = saved;
-    document.getElementById('watchSignup').addEventListener('submit', submitWatchlist);
+  function render() {
+    const state = readState();
+    const impact = calculateImpact(state);
+
+    const roofSizeValue = document.getElementById('roofSizeValue');
+    const sunHoursValue = document.getElementById('sunHoursValue');
+    const donationRateValue = document.getElementById('donationRateValue');
+    const shareLabel = document.getElementById('shareLabel');
+    const shareBar = document.getElementById('shareBar');
+
+    if (roofSizeValue) roofSizeValue.textContent = `${state.roofSize} sq ft`;
+    if (sunHoursValue) sunHoursValue.textContent = `${Number(state.sunHours).toFixed(1)} hrs`;
+    if (donationRateValue) donationRateValue.textContent = `${state.donationRate}%`;
+    if (shareLabel) shareLabel.textContent = `${state.donationRate}%`;
+    if (shareBar) shareBar.style.width = `${state.donationRate}%`;
+
+    const generatedEl = document.getElementById('generatedValue');
+    const donatedEl = document.getElementById('donatedValue');
+    const savedEl = document.getElementById('savedValue');
+    const helpedEl = document.getElementById('helpedValue');
+
+    if (generatedEl) generatedEl.textContent = formatKwh(impact.generated);
+    if (donatedEl) donatedEl.textContent = formatKwh(impact.donated);
+    if (savedEl) savedEl.textContent = formatCurrency(impact.savedCost);
+    if (helpedEl) helpedEl.textContent = String(impact.peopleHelped);
+
+    const heroPower = document.getElementById('heroPower');
+    const heroDonation = document.getElementById('heroDonation');
+    const heroHomes = document.getElementById('heroHomes');
+    const cardOutput = document.getElementById('cardOutput');
+    const cardBattery = document.getElementById('cardBattery');
+    const cardDonate = document.getElementById('cardDonate');
+
+    if (heroPower) heroPower.textContent = formatKwh(impact.generated);
+    if (heroDonation) heroDonation.textContent = formatKwh(impact.donated);
+    if (heroHomes) heroHomes.textContent = String(impact.peopleHelped);
+    if (cardOutput) cardOutput.textContent = Number(impact.generated).toFixed(1);
+    if (cardBattery) cardBattery.textContent = `${impact.batteryLevel}%`;
+    if (cardDonate) cardDonate.textContent = `${state.donationRate}%`;
+
+    const pantry = impact.donated * 0.4;
+    const school = impact.donated * 0.35;
+    const clinic = impact.donated * 0.25;
+
+    const pantryLabel = document.getElementById('pantryLabel');
+    const schoolLabel = document.getElementById('schoolLabel');
+    const clinicLabel = document.getElementById('clinicLabel');
+
+    if (pantryLabel) pantryLabel.textContent = formatKwh(pantry);
+    if (schoolLabel) schoolLabel.textContent = formatKwh(school);
+    if (clinicLabel) clinicLabel.textContent = formatKwh(clinic);
+
+    updatePriorityButtons(state.priority);
   }
 
-  async function submitWatchlist(e) {
-    e.preventDefault();
-    const email = (document.getElementById('simEmail').value || '').trim().toLowerCase();
-    const msg = document.getElementById('watchMsg');
-    if (!EMAIL_RE.test(email)) {
-      msg.textContent = 'A valid email is required.';
-      return;
-    }
-    const watchlist = watchlistPayload();
-    const payload = { email, watchlist };
-    localStorage.setItem('moth_checkout_email', email);
-    localStorage.setItem('moth_watchlist_v1', JSON.stringify(payload));
+  function syncState() {
+    const state = readState();
+    const roof = document.getElementById('roofSize');
+    const sun = document.getElementById('sunHours');
+    const donation = document.getElementById('donationRate');
 
-    if (!API) {
-      msg.textContent = 'Saved on this device. Add your Lambda URL as MOTH_WATCHLIST_API to push to Dynamo.';
-      return;
-    }
-    try {
-      const res = await fetch(API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+    if (roof) roof.value = String(state.roofSize);
+    if (sun) sun.value = String(state.sunHours);
+    if (donation) donation.value = String(state.donationRate);
+
+    render();
+  }
+
+  function bindControls() {
+    const roof = document.getElementById('roofSize');
+    const sun = document.getElementById('sunHours');
+    const donation = document.getElementById('donationRate');
+
+    if (roof) {
+      roof.addEventListener('input', (event) => {
+        const nextState = readState();
+        nextState.roofSize = Number(event.target.value);
+        nextState.lastUpdated = Date.now();
+        writeState(nextState);
+        render();
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        msg.textContent = data.error || 'Could not save your signup. Try again.';
-        return;
-      }
-      msg.textContent = data.message || ('Signed up. ' + (data.count || watchlist.length) + ' symbols.');
-    } catch {
-      msg.textContent = 'Could not save your signup. Try again.';
     }
-  }
 
-  function openTrade(id) {
-    const email = (document.getElementById('simEmail') && document.getElementById('simEmail').value || localStorage.getItem('moth_checkout_email') || '').trim();
-    if (!EMAIL_RE.test(email)) {
-      const msg = document.getElementById('watchMsg');
-      if (msg) msg.textContent = 'Email required before you paper-trade.';
-      document.getElementById('simEmail') && document.getElementById('simEmail').focus();
-      return;
+    if (sun) {
+      sun.addEventListener('input', (event) => {
+        const nextState = readState();
+        nextState.sunHours = Number(event.target.value);
+        nextState.lastUpdated = Date.now();
+        writeState(nextState);
+        render();
+      });
     }
-    tradeId = id;
-    const coin = COINS.find((c) => c.id === id);
-    const modal = document.getElementById('tradeModal');
-    document.getElementById('tradeTitle').textContent = 'Trade ' + coin.symbol;
-    document.getElementById('tradePrice').textContent = 'Live: ' + (prices[id]?.usd != null ? money(prices[id].usd) : '—') + ' · paper only';
-    document.getElementById('tradeAmt').value = '';
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-  }
 
-  function closeTrade() {
-    const modal = document.getElementById('tradeModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    tradeId = null;
-  }
-
-  function trade(side) {
-    const amt = Number(document.getElementById('tradeAmt').value);
-    const px = prices[tradeId]?.usd;
-    if (!tradeId || !px || !(amt > 0)) return;
-    const s = loadSim();
-    const cost = amt * px;
-    if (side === 'buy') {
-      if (cost > s.cash) return alert('Not enough paper cash.');
-      s.cash -= cost;
-      s.holdings[tradeId] = (s.holdings[tradeId] || 0) + amt;
-    } else {
-      if ((s.holdings[tradeId] || 0) < amt) return alert('Not enough paper coins.');
-      s.holdings[tradeId] -= amt;
-      s.cash += cost;
+    if (donation) {
+      donation.addEventListener('input', (event) => {
+        const nextState = readState();
+        nextState.donationRate = Number(event.target.value);
+        nextState.lastUpdated = Date.now();
+        writeState(nextState);
+        render();
+      });
     }
-    saveSim(s);
-    renderBalances();
-    renderWatch();
-    closeTrade();
-  }
 
-  async function fetchPrices() {
-    const ids = COINS.map((c) => c.id).join(',');
-    const url = 'https://api.coingecko.com/api/v3/simple/price?ids=' + ids + '&vs_currencies=usd&include_24hr_change=true';
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('price fail');
-    prices = await res.json();
-    renderWatch();
-    renderBalances();
-  }
-
-  const reset = document.getElementById('resetSim');
-  if (reset) reset.onclick = () => { saveSim({ cash: START, holdings: {} }); renderBalances(); renderWatch(); };
-
-  document.getElementById('buyBtn')?.addEventListener('click', () => trade('buy'));
-  document.getElementById('sellBtn')?.addEventListener('click', () => trade('sell'));
-  document.getElementById('closeTrade')?.addEventListener('click', closeTrade);
-
-  if (document.getElementById('watchBody')) {
-    mountSignup();
-    fetchPrices().catch(() => {
-      const body = document.getElementById('watchBody');
-      if (body) body.innerHTML = '<tr><td class="px-4 py-6 text-gray-500" colspan="4">CoinGecko paused. Refresh in a minute.</td></tr>';
+    document.querySelectorAll('.toggle').forEach((button) => {
+      button.addEventListener('click', () => {
+        const nextState = readState();
+        nextState.priority = button.dataset.priority;
+        nextState.lastUpdated = Date.now();
+        writeState(nextState);
+        render();
+      });
     });
-    setInterval(() => fetchPrices().catch(() => {}), 30000);
-    renderBalances();
+
+    const simulateDay = document.getElementById('simulateDay');
+    if (simulateDay) {
+      simulateDay.addEventListener('click', () => {
+        const nextState = readState();
+        const impact = calculateImpact(nextState);
+        nextState.generatedKwh = impact.generated;
+        nextState.donatedKwh = impact.donated;
+        nextState.savedCost = impact.savedCost;
+        nextState.peopleHelped = impact.peopleHelped;
+        nextState.batteryLevel = impact.batteryLevel;
+        nextState.lastUpdated = Date.now();
+        writeState(nextState);
+        render();
+      });
+    }
+
+    const donateNow = document.getElementById('donateNow');
+    if (donateNow) {
+      donateNow.addEventListener('click', () => {
+        const nextState = readState();
+        const impact = calculateImpact(nextState);
+        nextState.generatedKwh = impact.generated;
+        nextState.donatedKwh = impact.donated;
+        nextState.savedCost = impact.savedCost;
+        nextState.peopleHelped = impact.peopleHelped;
+        nextState.lastUpdated = Date.now();
+        writeState(nextState);
+        render();
+      });
+    }
   }
+
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  }
+
+  function init() {
+    syncState();
+    bindControls();
+    registerServiceWorker();
+  }
+
+  init();
 })();

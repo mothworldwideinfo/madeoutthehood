@@ -1,51 +1,728 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>MOTH EMPIRE // GAME APP</title>
-  <meta name="theme-color" content="#22d3ee" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="MOTH EMPIRE" />
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="icon" href="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: Inter, system-ui, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(34,211,238,.12), transparent 22%),
-        linear-gradient(180deg, #030712 0%, #060b1d 40%, #02030b 100%);
-      min-height: 100vh;
-    }
-    body::before {
-      content: '';
-      position: fixed; inset: 0; pointer-events: none;
-      background-image:
-        radial-gradient(circle at top left, rgba(34,211,238,.16), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(139,92,246,.16), transparent 35%);
-    }
-    .font-display { font-family: Orbitron, system-ui, sans-serif; }
-    .glow { box-shadow: 0 0 20px rgba(34,211,238,.45), 0 0 40px rgba(139,92,246,.25); }
-  </style>
-</head>
-<body class="text-white">
-  <main class="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
-    <div class="w-full max-w-md rounded-[2rem] border border-cyan-400/40 bg-gradient-to-b from-slate-950 to-black p-8 text-center glow">
-      <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-cyan-400/40 bg-black/70">
-        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="MOTH" class="h-full w-full object-cover" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MOTH EMPIRE // FREE SOLAR</title>
+    <meta name="description" content="MOTH Empire solar donation dashboard for clean energy, community power, and free energy for the hood." />
+    <meta name="theme-color" content="#ff2f7e" />
+    <link rel="manifest" href="./manifest.json" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+      :root {
+        --void: #0a0a0c;
+        --panel: #121216;
+        --panel-2: #19191f;
+        --panel-3: #11151a;
+        --border: #2a2a33;
+        --text: #f4eff5;
+        --text-dim: #a79ca9;
+        --pink: #ff2f7e;
+        --pink-dim: #d1246a;
+        --cyan: #72e4ff;
+        --cyan-deep: #2dd4bf;
+        --green: #8df0b3;
+        --amber: #ffd166;
+        --danger: #ff7b7b;
+        --shadow: 0 24px 60px rgba(255, 47, 126, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: 'Inter', system-ui, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(255, 47, 126, 0.18), transparent 22%),
+          radial-gradient(circle at bottom right, rgba(114, 228, 255, 0.15), transparent 18%),
+          linear-gradient(180deg, var(--void) 0%, #090b10 100%);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      img { max-width: 100%; display: block; }
+
+      .container {
+        width: min(1200px, calc(100% - 2rem));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(10, 10, 12, 0.8);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .brand-mark {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--pink), var(--amber));
+        color: var(--void);
+        box-shadow: 0 0 26px rgba(255, 47, 126, 0.5);
+        font-size: 16px;
+      }
+
+      .brand strong { color: var(--text); }
+      .brand span { color: var(--pink); }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      .nav-links a:hover { color: var(--pink); }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        padding: 0.9rem 1.35rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      }
+      .button:hover { transform: translateY(-1px); }
+      .button.primary {
+        background: linear-gradient(135deg, var(--pink), #ff6c9c);
+        color: #140912;
+        box-shadow: 0 18px 34px rgba(255, 47, 126, 0.26);
+      }
+      .button.secondary {
+        border-color: rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.02);
+        color: var(--text);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 2rem;
+        padding: 4rem 0 2rem;
+        align-items: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 1rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--pink);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.8rem, 5vw, 5.1rem);
+        line-height: 0.94;
+        letter-spacing: -0.06em;
+      }
+
+      .lead {
+        margin-top: 1rem;
+        max-width: 42rem;
+        color: var(--text-dim);
+        font-size: 1.08rem;
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .stats-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2.2rem;
+      }
+
+      .stat-card {
+        flex: 1 1 170px;
+        min-width: 170px;
+        padding: 1rem 1.1rem;
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        background: rgba(17, 21, 26, 0.88);
+      }
+
+      .stat-card span {
+        display: block;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+      }
+
+      .stat-card b {
+        display: block;
+        margin-top: 0.45rem;
+        font-size: 1.7rem;
+        letter-spacing: -0.05em;
+      }
+
+      .solar-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 47, 126, 0.26);
+        border-radius: 1.4rem;
+        background: linear-gradient(180deg, rgba(25, 25, 31, 0.96), rgba(11, 12, 16, 0.96));
+        box-shadow: var(--shadow);
+        padding: 1.2rem;
+      }
+
+      .solar-card::before {
+        content: '';
+        position: absolute;
+        top: -26%;
+        right: -12%;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 209, 102, 0.3), transparent 62%);
+      }
+
+      .panel-header {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        color: var(--text-dim);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .signal {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.42rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid rgba(114, 228, 255, 0.3);
+        color: var(--cyan);
+      }
+      .signal::before {
+        content: '';
+        display: block;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 50%;
+        background: var(--cyan);
+        box-shadow: 0 0 18px rgba(114, 228, 255, 0.8);
+      }
+
+      .sun-visual {
+        position: relative;
+        z-index: 1;
+        height: 260px;
+        border-radius: 1rem;
+        border: 1px solid rgba(255,255,255,0.07);
+        background: linear-gradient(180deg, rgba(15, 23, 29, 0.92), rgba(9, 10, 16, 0.98));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .sun {
+        position: relative;
+        width: 118px;
+        height: 118px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #fff7cf, #ffd166 35%, #ff9f1c 68%, rgba(255, 159, 28, 0.2) 100%);
+        box-shadow: 0 0 42px rgba(255, 209, 102, 0.7);
+      }
+      .sun::before,
+      .sun::after {
+        content: '';
+        position: absolute;
+        inset: -18px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 209, 102, 0.28);
+      }
+      .sun::after {
+        inset: -34px;
+        border-color: rgba(114, 228, 255, 0.24);
+      }
+
+      .sun-grid {
+        position: absolute;
+        inset: 1rem;
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        align-items: end;
+        gap: 0.4rem;
+      }
+      .sun-grid span {
+        display: block;
+        width: 100%;
+        border-radius: 999px 999px 0 0;
+        background: linear-gradient(180deg, rgba(114, 228, 255, 0.9), rgba(255, 47, 126, 0.12));
+      }
+
+      .panel-metrics {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .mini-metric {
+        border-radius: 0.8rem;
+        padding: 0.8rem 0.75rem;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.02);
+      }
+      .mini-metric strong {
+        display: block;
+        font-size: 1.2rem;
+        letter-spacing: -0.06em;
+      }
+      .mini-metric span {
+        display: block;
+        margin-top: 0.15rem;
+        color: var(--text-dim);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 1.4rem;
+        padding: 1.5rem 0 4rem;
+      }
+
+      .panel {
+        background: rgba(18, 18, 22, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 1.35rem;
+        padding: 1.3rem;
+      }
+      .panel h2 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .field {
+        margin-top: 1.15rem;
+      }
+      .field label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        margin-bottom: 0.65rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+      .field-output {
+        color: var(--text);
+        font-weight: 700;
+      }
+      input[type='range'] {
+        width: 100%;
+        accent-color: var(--pink);
+      }
+
+      .donation-amount {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 74px;
+        padding: 0.45rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255,47,126,0.26);
+        background: rgba(255,47,126,0.07);
+        color: var(--pink);
+      }
+
+      .toggle-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 1.1rem;
+      }
+      .toggle {
+        flex: 1 1 90px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.02);
+        color: var(--text);
+        padding: 0.7rem 0.85rem;
+        cursor: pointer;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .toggle.active {
+        background: rgba(255,47,126,0.08);
+        border-color: rgba(255,47,126,0.4);
+        color: var(--pink);
+      }
+
+      .panel-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1.3rem;
+      }
+
+      .impact-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin-top: 1rem;
+      }
+      .impact-card {
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        background: rgba(255,255,255,0.015);
+        padding: 0.9rem 1rem;
+      }
+      .impact-card .label {
+        display: block;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: 0.45rem;
+      }
+      .impact-card strong {
+        font-size: clamp(1.3rem, 2vw, 2.1rem);
+        letter-spacing: -0.06em;
+      }
+
+      .progress-block {
+        margin-top: 1.4rem;
+      }
+      .progress-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-dim);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .progress {
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.06);
+        overflow: hidden;
+      }
+      .progress-bar {
+        width: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--pink), var(--cyan));
+        transition: width 0.25s ease;
+      }
+
+      .community-list {
+        display: grid;
+        gap: 0.8rem;
+        margin-top: 1.2rem;
+      }
+      .community-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.9rem;
+        padding: 0.9rem 0.95rem;
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+      }
+      .community-item strong {
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+      .community-item small {
+        color: var(--text-dim);
+      }
+      .pill {
+        padding: 0.45rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(255,209,102,0.12);
+        border: 1px solid rgba(255,209,102,0.2);
+        color: var(--amber);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 900px) {
+        .hero, .dashboard { grid-template-columns: 1fr; }
+        .nav-links { display: none; }
+      }
+
+      @media (max-width: 560px) {
+        .button {
+          width: 100%;
+        }
+        .hero-actions, .panel-actions { flex-direction: column; }
+        .stats-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="#top" class="brand" aria-label="MOTH Empire home">
+          <span class="brand-mark">☀</span>
+          <strong>MOTH</strong>
+          <span>Empire</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#impact">Impact</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="./game.html">Game</a>
+          <a href="./shop.html">Shop</a>
+          <a href="./index-3.html">Signal</a>
+        </nav>
+
+        <a href="#dashboard" class="button primary">Activate solar</a>
       </div>
-      <div class="font-display text-[11px] uppercase tracking-[0.4em] text-cyan-300">MOTH EMPIRE</div>
-      <h1 class="mt-2 font-display text-4xl font-black tracking-wider">GAME APP</h1>
-      <p class="mt-3 text-sm text-gray-300">Create your empire self, unlock packs, and step into the moth journey. Same cosmic server as before.</p>
-      <a href="./game.html" class="mt-6 block rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 font-display text-sm font-black uppercase tracking-[0.3em] text-black glow">ENTER GAME</a>
-      <div class="mt-3 grid grid-cols-2 gap-2">
-        <a href="./shop.html" class="rounded-full border border-white/20 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-gray-300">Shop</a>
-        <a href="./shop.html#sim" class="rounded-full border border-cyan-400/30 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-cyan-300">Paper book</a>
+    </header>
+
+    <main id="top" class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">Free energy from the sun</p>
+          <h1 id="hero-title">Power the block. Donate the surplus.</h1>
+          <p class="lead">
+            MOTH Empire turns rooftop solar into free power for families, schools, and community hubs.
+            Every extra kilowatt-hour gets shared back to the people building the neighborhood.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#dashboard" class="button primary">Create solar</a>
+            <a href="#impact" class="button secondary">View impact</a>
+          </div>
+
+          <div class="stats-row" aria-label="Solar stats">
+            <div class="stat-card">
+              <span>Power today</span>
+              <b id="heroPower">0.0 kWh</b>
+            </div>
+            <div class="stat-card">
+              <span>Shared this week</span>
+              <b id="heroDonation">0.0 kWh</b>
+            </div>
+            <div class="stat-card">
+              <span>Homes served</span>
+              <b id="heroHomes">0</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="solar-card" aria-label="Solar generation control panel">
+          <div class="panel-header">
+            <span>Solar field</span>
+            <span class="signal">Live</span>
+          </div>
+
+          <div class="sun-visual" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="sun-grid">
+              <span style="height: 26%"></span>
+              <span style="height: 42%"></span>
+              <span style="height: 58%"></span>
+              <span style="height: 74%"></span>
+              <span style="height: 64%"></span>
+              <span style="height: 48%"></span>
+              <span style="height: 68%"></span>
+            </div>
+          </div>
+
+          <div class="panel-metrics">
+            <div class="mini-metric">
+              <strong id="cardOutput">0.0</strong>
+              <span>kWh/day</span>
+            </div>
+            <div class="mini-metric">
+              <strong id="cardBattery">0%</strong>
+              <span>Storage</span>
+            </div>
+            <div class="mini-metric">
+              <strong id="cardDonate">0%</strong>
+              <span>Donated</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="dashboard" aria-label="Solar donation dashboard">
+        <div class="panel">
+          <h2>Solar donation planner</h2>
+
+          <div class="field">
+            <label for="roofSize">
+              <span>Roof size</span>
+              <span class="field-output" id="roofSizeValue">300 sq ft</span>
+            </label>
+            <input id="roofSize" type="range" min="80" max="800" step="10" value="300" />
+          </div>
+
+          <div class="field">
+            <label for="sunHours">
+              <span>Sun hours</span>
+              <span class="field-output" id="sunHoursValue">5.5 hrs</span>
+            </label>
+            <input id="sunHours" type="range" min="2" max="9" step="0.5" value="5.5" />
+          </div>
+
+          <div class="field" id="donate">
+            <label for="donationRate">
+              <span>Donation share</span>
+              <span class="field-output donation-amount" id="donationRateValue">60%</span>
+            </label>
+            <input id="donationRate" type="range" min="10" max="100" step="5" value="60" />
+          </div>
+
+          <div class="toggle-row" aria-label="Priority community">
+            <button class="toggle active" type="button" data-priority="family">Family first</button>
+            <button class="toggle" type="button" data-priority="school">School care</button>
+            <button class="toggle" type="button" data-priority="clinic">Cooling hubs</button>
+          </div>
+
+          <div class="panel-actions">
+            <button id="simulateDay" class="button primary" type="button">Simulate a sunny day</button>
+            <button id="donateNow" class="button secondary" type="button">Donate now</button>
+          </div>
+        </div>
+
+        <div class="panel" id="impact">
+          <h2>Live impact</h2>
+
+          <div class="impact-grid">
+            <div class="impact-card">
+              <span class="label">Generated</span>
+              <strong id="generatedValue">0.0 kWh</strong>
+            </div>
+            <div class="impact-card">
+              <span class="label">Donated</span>
+              <strong id="donatedValue">0.0 kWh</strong>
+            </div>
+            <div class="impact-card">
+              <span class="label">Saved cost</span>
+              <strong id="savedValue">$0</strong>
+            </div>
+            <div class="impact-card">
+              <span class="label">People helped</span>
+              <strong id="helpedValue">0</strong>
+            </div>
+          </div>
+
+          <div class="progress-block">
+            <div class="progress-label">
+              <span>Community sharing</span>
+              <span id="shareLabel">60%</span>
+            </div>
+            <div class="progress" aria-label="Community sharing progress">
+              <div class="progress-bar" id="shareBar"></div>
+            </div>
+          </div>
+
+          <div class="community-list" aria-label="Community recipients">
+            <div class="community-item">
+              <div>
+                <strong>Northside food pantry</strong>
+                <small>Free meal prep support</small>
+              </div>
+              <span class="pill" id="pantryLabel">0 kWh</span>
+            </div>
+            <div class="community-item">
+              <div>
+                <strong>Elm Street school</strong>
+                <small>Charging and study hours</small>
+              </div>
+              <span class="pill" id="schoolLabel">0 kWh</span>
+            </div>
+            <div class="community-item">
+              <div>
+                <strong>River clinic cooling hub</strong>
+                <small>Medical refrigeration</small>
+              </div>
+              <span class="pill" id="clinicLabel">0 kWh</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer style="border-top:1px solid var(--border); margin-top:2rem; padding:1.2rem 0 2.4rem; color:var(--text-dim);">
+      <div class="container" style="display:flex; flex-wrap:wrap; gap:.75rem 1.2rem; justify-content:space-between; align-items:center; font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase;">
+        <span>MOTH Empire // free solar</span>
+        <div style="display:flex; flex-wrap:wrap; gap:.75rem 1.2rem;">
+          <a href="./index.html">Home</a>
+          <a href="./game.html">Game</a>
+          <a href="./shop.html">Shop</a>
+          <a href="./index-3.html">Signal</a>
+        </div>
       </div>
-      <p class="mt-4 text-[11px] uppercase tracking-[0.3em] text-gray-500">Offline-ready • installable • mobile first</p>
-    </div>
-  </main>
-</body>
+    </footer>
+
+    <script src="./sim.js"></script>
+  </body>
 </html>
