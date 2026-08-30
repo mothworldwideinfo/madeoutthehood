@@ -4,24 +4,151 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOTH Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    html, body { margin: 0; height: 100%; background: #050505; }
-    .bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 2;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 14px; background: #050505;
-      border-bottom: 1px solid rgba(255,45,149,.35);
-      font-family: Inter, system-ui, sans-serif;
+    :root {
+      --bg: #050816;
+      --panel: rgba(15,23,42,.8);
+      --line: rgba(148,163,184,.2);
+      --cyan: #22d3ee;
+      --violet: #8b5cf6;
+      --pink: #ff4db8;
+      --text: #ecf3ff;
+      --muted: #9aa8c0;
     }
-    .bar a { color: #ff2d95; text-decoration: none; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; }
-    iframe { border: 0; width: 100%; height: 100%; padding-top: 44px; box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: linear-gradient(180deg, #050816 0%, #0b1120 42%, #030712 100%); color: var(--text); }
+    body { font-family: Inter, system-ui, sans-serif; }
+    .font-display { font-family: Orbitron, system-ui, sans-serif; }
+    .glass { background: rgba(15,23,42,.72); border: 1px solid var(--line); backdrop-filter: blur(12px); }
   </style>
 </head>
 <body>
-  <div class="bar">
-    <a href="./index.html">← Game app</a>
-    <a href="./game.html">Enter game</a>
-  </div>
-  <iframe title="MOTH shop" src="https://cdn.jsdelivr.net/gh/mothworldwideinfo/madeoutthehood@45193bf0fd1e6499676e17f56f3a2a2f9d210125/index.html"></iframe>
+  <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <a href="./index.html" class="font-display text-xs uppercase tracking-[0.35em] text-cyan-300">MOTH EMPIRE</a>
+      <nav class="hidden items-center gap-6 text-[10px] uppercase tracking-[0.25em] text-slate-300 md:flex">
+        <a href="./game.html">Game</a>
+        <a href="./index-3.html">Demo</a>
+        <a href="./careers.html">Careers</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <section class="glass rounded-[2rem] p-6 sm:p-8">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="font-display text-[10px] uppercase tracking-[0.35em] text-pink-300">Shopify storefront</p>
+          <h1 class="mt-3 font-display text-4xl font-black uppercase tracking-tight text-white">Drop 01</h1>
+          <p class="mt-3 max-w-xl text-sm text-slate-300">Connect the live storefront using your Shopify domain and Storefront access token. Until then, this page keeps the luxury experience alive with a polished collection preview.</p>
+        </div>
+        <div class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-emerald-300">Solar fund support enabled</div>
+      </div>
+    </section>
+
+    <section id="shopProducts" class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3"></section>
+    <p id="shopStatus" class="mt-4 text-sm text-slate-400"></p>
+  </main>
+
+  <script>
+    const productsRoot = document.getElementById('shopProducts');
+    const shopStatus = document.getElementById('shopStatus');
+
+    const fallbackProducts = [
+      { title: 'MOTH Utility Tee', price: '$78', description: 'Premium cotton drop with studio texture and clean silhouette.' },
+      { title: 'Empire Cap', price: '$42', description: 'Low-profile cap in matte black with embroidered mark.' },
+      { title: 'Signal Hoodie', price: '$152', description: 'Oversized heavyweight hoodie built for daily wear.' }
+    ];
+
+    function renderFallback() {
+      productsRoot.innerHTML = fallbackProducts.map((product) => `
+        <article class="glass rounded-[1.5rem] p-5">
+          <div class="mb-4 h-52 rounded-[1.2rem] bg-gradient-to-br from-cyan-500/20 via-violet-500/20 to-pink-500/20 border border-white/10"></div>
+          <div class="font-display text-[10px] uppercase tracking-[0.25em] text-cyan-300">Featured</div>
+          <h2 class="mt-3 text-2xl font-bold text-white">${product.title}</h2>
+          <p class="mt-2 text-sm text-slate-300">${product.description}</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="font-display text-xl text-white">${product.price}</span>
+            <button class="rounded-full bg-gradient-to-r from-pink-500 to-violet-500 px-4 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-white">Add</button>
+          </div>
+        </article>
+      `).join('');
+      shopStatus.textContent = 'Shopify storefront is ready to connect with your live domain and token.';
+    }
+
+    async function loadShopifyProducts() {
+      const config = window.MOTH_SHOPIFY_CONFIG || {};
+      const domain = config.domain || '';
+      const token = config.storefrontAccessToken || '';
+      const productHandle = config.productHandle || '';
+
+      if (!domain || !token || !productHandle) {
+        renderFallback();
+        return;
+      }
+
+      const storefrontUrl = `https://${domain}/api/2024-01/graphql.json`;
+      const query = `
+        query ($handle: String!) {
+          productByHandle(handle: $handle) {
+            id
+            title
+            description
+            handle
+            priceRange { minVariantPrice { amount currencyCode } }
+            images(first: 1) { edges { node { url altText } } }
+          }
+        }
+      `;
+
+      try {
+        const response = await fetch(storefrontUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Storefront-Access-Token': token
+          },
+          body: JSON.stringify({ query, variables: { handle: productHandle } })
+        });
+
+        if (!response.ok) throw new Error('Shopify request failed');
+        const data = await response.json();
+        const product = data?.data?.productByHandle;
+
+        if (!product) {
+          renderFallback();
+          return;
+        }
+
+        const image = product.images?.edges?.[0]?.node?.url || '';
+        const price = Number(product.priceRange?.minVariantPrice?.amount || 0);
+        const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: product.priceRange?.minVariantPrice?.currencyCode || 'USD' }).format(price);
+
+        productsRoot.innerHTML = `
+          <article class="glass rounded-[1.5rem] p-5 md:col-span-2 xl:col-span-3">
+            <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+              <div class="h-72 rounded-[1.2rem] border border-white/10 bg-cover bg-center" style="background-image: url('${image}')"></div>
+              <div>
+                <div class="font-display text-[10px] uppercase tracking-[0.25em] text-cyan-300">Live product</div>
+                <h2 class="mt-3 text-3xl font-bold text-white">${product.title}</h2>
+                <p class="mt-3 text-sm text-slate-300">${product.description || 'Limited-edition release from MOTH EMPIRE.'}</p>
+                <div class="mt-5 flex items-center justify-between">
+                  <span class="font-display text-2xl text-white">${formatted}</span>
+                  <a href="https://${domain}/products/${product.handle}" target="_blank" rel="noreferrer" class="rounded-full bg-gradient-to-r from-pink-500 to-violet-500 px-5 py-3 text-[10px] font-black uppercase tracking-[0.25em] text-white">View product</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+        shopStatus.textContent = 'Live Shopify product connected.';
+      } catch (error) {
+        console.error(error);
+        renderFallback();
+      }
+    }
+
+    loadShopifyProducts();
+  </script>
 </body>
 </html>

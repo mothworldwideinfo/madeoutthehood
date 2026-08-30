@@ -3,49 +3,273 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>MOTH EMPIRE // GAME APP</title>
+  <title>MOTH EMPIRE // Dior Going Digital</title>
+  <meta name="description" content="MOTH EMPIRE pairs Dior Going Digital energy with gaming, a live trading demo toy, and a merch waitlist for an elevated digital-fashion brand experience." />
   <meta name="theme-color" content="#22d3ee" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="MOTH EMPIRE" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #030712;
+      --panel: rgba(15, 23, 42, 0.8);
+      --panel-strong: rgba(15, 23, 42, 0.96);
+      --line: rgba(148, 163, 184, 0.2);
+      --cyan: #22d3ee;
+      --violet: #8b5cf6;
+      --pink: #ff4db8;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    html { scroll-behavior: smooth; }
     body {
       font-family: Inter, system-ui, sans-serif;
       background:
         radial-gradient(circle at top, rgba(34,211,238,.12), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,.18), transparent 35%),
         linear-gradient(180deg, #030712 0%, #060b1d 40%, #02030b 100%);
       min-height: 100vh;
+      color: var(--text);
     }
     body::before {
       content: '';
       position: fixed; inset: 0; pointer-events: none;
       background-image:
-        radial-gradient(circle at top left, rgba(34,211,238,.16), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(139,92,246,.16), transparent 35%);
+        radial-gradient(circle at top left, rgba(34,211,238,.14), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(255,77,184,.12), transparent 35%);
     }
     .font-display { font-family: Orbitron, system-ui, sans-serif; }
-    .glow { box-shadow: 0 0 20px rgba(34,211,238,.45), 0 0 40px rgba(139,92,246,.25); }
+    .glow { box-shadow: 0 0 18px rgba(34,211,238,.35), 0 0 40px rgba(139,92,246,.18); }
+    .glass { background: rgba(15, 23, 42, 0.72); border: 1px solid var(--line); backdrop-filter: blur(12px); }
   </style>
 </head>
 <body class="text-white">
-  <main class="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
-    <div class="w-full max-w-md rounded-[2rem] border border-cyan-400/40 bg-gradient-to-b from-slate-950 to-black p-8 text-center glow">
-      <div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-cyan-400/40 bg-black/70">
-        <img src="https://raw.githubusercontent.com/mothworldwideinfo/supreme-empire/main/DJ2fR.jpg" alt="MOTH" class="h-full w-full object-cover" />
-      </div>
-      <div class="font-display text-[11px] uppercase tracking-[0.4em] text-cyan-300">MOTH EMPIRE</div>
-      <h1 class="mt-2 font-display text-4xl font-black tracking-wider">GAME APP</h1>
-      <p class="mt-3 text-sm text-gray-300">Create your empire self, unlock packs, and step into the moth journey. Same cosmic server as before.</p>
-      <a href="./game.html" class="mt-6 block rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 font-display text-sm font-black uppercase tracking-[0.3em] text-black glow">ENTER GAME</a>
-      <div class="mt-3 grid grid-cols-2 gap-2">
-        <a href="./shop.html" class="rounded-full border border-white/20 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-gray-300">Shop</a>
-        <a href="./shop.html#sim" class="rounded-full border border-cyan-400/30 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-cyan-300">Paper book</a>
-      </div>
-      <p class="mt-4 text-[11px] uppercase tracking-[0.3em] text-gray-500">Offline-ready • installable • mobile first</p>
+  <header class="relative z-10 border-b border-white/10 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <a href="#top" class="font-display text-xs uppercase tracking-[0.35em] text-cyan-300">MOTH EMPIRE</a>
+      <nav class="hidden items-center gap-6 text-[10px] uppercase tracking-[0.25em] text-slate-300 md:flex">
+        <a href="./game.html" class="hover:text-cyan-300">Game</a>
+        <a href="./index-3.html" class="hover:text-cyan-300">Demo</a>
+        <a href="#waitlist" class="hover:text-cyan-300">Merch</a>
+        <a href="./shop.html" class="hover:text-cyan-300">Shop</a>
+        <a href="./careers.html" class="hover:text-cyan-300">Careers</a>
+      </nav>
     </div>
+  </header>
+
+  <main id="top" class="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
+    <section class="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+      <div>
+        <p class="font-display text-[10px] uppercase tracking-[0.42em] text-cyan-300">Dior Going Digital · MOTH EMPIRE</p>
+        <h1 class="mt-4 font-display text-4xl font-black uppercase tracking-tight text-white sm:text-5xl lg:text-6xl">
+          Play.<br />Trade.<br />Watch for merch.
+        </h1>
+        <p class="mt-5 max-w-xl text-base text-slate-300">
+          A luxury digital-world experience rooted in Dior Going Digital energy: culture, access, collectible drop anticipation, and premium online expression.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="./game.html" class="rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 text-center font-display text-[10px] font-black uppercase tracking-[0.32em] text-black glow">Enter game</a>
+          <a href="./index-3.html" class="rounded-full border border-cyan-400/40 bg-cyan-400/5 px-6 py-3 text-center font-display text-[10px] font-black uppercase tracking-[0.32em] text-cyan-200">Live demo</a>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.22em] text-slate-400">
+          <span class="rounded-full border border-white/10 px-3 py-2">Dior Going Digital</span>
+          <span class="rounded-full border border-white/10 px-3 py-2">Live trading toy</span>
+          <span class="rounded-full border border-white/10 px-3 py-2">Merch waitlist</span>
+        </div>
+      </div>
+
+      <div class="glass glow rounded-[2rem] p-5 sm:p-8">
+        <div class="rounded-[1.5rem] border border-cyan-400/30 bg-black/50 p-4">
+          <div class="flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-cyan-300">
+            <span>Empire status</span>
+            <span class="rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2 py-1 text-emerald-300">Online</span>
+          </div>
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <div class="rounded-2xl border border-white/10 bg-slate-900/90 p-4">
+              <div class="text-[10px] uppercase tracking-[0.25em] text-slate-400">Players</div>
+              <div class="mt-3 font-display text-3xl text-cyan-300">08</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-slate-900/90 p-4">
+              <div class="text-[10px] uppercase tracking-[0.25em] text-slate-400">Sync</div>
+              <div class="mt-3 font-display text-3xl text-violet-300">+24%</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-slate-900/90 p-4 col-span-2">
+              <div class="text-[10px] uppercase tracking-[0.25em] text-slate-400">Merch watch</div>
+              <div class="mt-3 font-display text-2xl text-pink-300">Drop 01</div>
+              <div class="mt-1 text-xs text-slate-400">Waiting list open</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16 grid gap-5 md:grid-cols-3">
+      <article class="glass rounded-3xl p-6">
+        <div class="font-display text-[10px] uppercase tracking-[0.35em] text-cyan-300">01 // Game</div>
+        <h2 class="mt-4 text-2xl font-bold text-white">Free mobile game loop</h2>
+        <p class="mt-3 text-sm text-slate-300">A sleek brand experience that turns attention into engagement with a product-first digital-game hook.</p>
+        <a href="./game.html" class="mt-6 inline-block text-[10px] uppercase tracking-[0.25em] text-cyan-300">Open game →</a>
+      </article>
+
+      <article class="glass rounded-3xl p-6">
+        <div class="font-display text-[10px] uppercase tracking-[0.35em] text-violet-300">02 // Demo</div>
+        <h2 class="mt-4 text-2xl font-bold text-white">Paper trading toy</h2>
+        <p class="mt-3 text-sm text-slate-300">A live demo that feels like a digital asset dashboard with real-time crypto pricing and a polished trading aesthetic.</p>
+        <a href="./index-3.html" class="mt-6 inline-block text-[10px] uppercase tracking-[0.25em] text-violet-300">Try demo →</a>
+      </article>
+
+      <article class="glass rounded-3xl p-6">
+        <div class="font-display text-[10px] uppercase tracking-[0.35em] text-pink-300">03 // Merch</div>
+        <h2 class="mt-4 text-2xl font-bold text-white">Watch the drop</h2>
+        <p class="mt-3 text-sm text-slate-300">Capture interest for the next collectible release and keep your audience warm before the launch window opens.</p>
+        <a href="#waitlist" class="mt-6 inline-block text-[10px] uppercase tracking-[0.25em] text-pink-300">Join waitlist →</a>
+      </article>
+    </section>
+
+    <section class="mt-16 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+      <div class="glass rounded-[2rem] p-6 sm:p-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-cyan-300">Dior Going Digital</p>
+        <h2 class="mt-3 text-2xl font-bold text-white">Luxury energy, digital-first access, culture-led scarcity</h2>
+        <p class="mt-4 text-sm text-slate-300">
+          This is the angle for the brand: digital luxury with a social aura, collectible intention, and an online experience that feels premium without being heavy.
+        </p>
+        <div class="mt-6 space-y-4 text-sm text-slate-300">
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">Digital access as status symbol.</div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">Collector-first drops with wait-list energy.</div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">Premium brand world shaped by sleek product, game, and financial toy concepts.</div>
+        </div>
+      </div>
+
+      <div class="glass rounded-[2rem] p-6 sm:p-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-violet-300">Launch stack</p>
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
+            <div class="font-display text-[10px] uppercase tracking-[0.25em] text-cyan-300">Frontend</div>
+            <p class="mt-2 text-sm text-slate-300">Static HTML + Tailwind + PWA install support</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
+            <div class="font-display text-[10px] uppercase tracking-[0.25em] text-cyan-300">Hosting</div>
+            <p class="mt-2 text-sm text-slate-300">Deploy to Vercel and point it to madeoutthehood.org</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
+            <div class="font-display text-[10px] uppercase tracking-[0.25em] text-cyan-300">Demo data</div>
+            <p class="mt-2 text-sm text-slate-300">CoinGecko prices + TradingView charts + local storage</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
+            <div class="font-display text-[10px] uppercase tracking-[0.25em] text-cyan-300">Waitlist</div>
+            <p class="mt-2 text-sm text-slate-300">Email capture and optional Lambda + DynamoDB backend</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16 glass rounded-[2rem] p-6 sm:p-8">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="font-display text-[10px] uppercase tracking-[0.35em] text-emerald-300">Solar Electric Fund</p>
+          <h2 class="mt-3 font-display text-3xl font-black uppercase tracking-tight text-white">Revenue tracker</h2>
+          <p class="mt-3 max-w-xl text-sm text-slate-300">We track store revenue and automatically earmark a percentage to the solar electric fund so every sale contributes to real impact.</p>
+        </div>
+        <div class="w-full max-w-md rounded-[1.5rem] border border-emerald-400/30 bg-slate-950/80 p-5">
+          <div class="text-[10px] uppercase tracking-[0.25em] text-emerald-300">Current revenue</div>
+          <div id="revenueTotal" class="mt-3 font-display text-4xl text-white">$0</div>
+          <div class="mt-3 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-400">
+            <span>Fund donation</span>
+            <span id="donationTotal">$0</span>
+          </div>
+          <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-800">
+            <div id="donationProgress" class="h-full w-0 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400"></div>
+          </div>
+          <div class="mt-3 text-xs text-slate-400"><span id="impactGoal">$0</span> goal to fund solar access</div>
+        </div>
+      </div>
+      <form id="revenueForm" class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <input id="revenueInput" type="number" min="0" step="0.01" placeholder="Add revenue amount" class="w-full rounded-full border border-white/10 bg-slate-950/80 px-5 py-3 text-sm text-white placeholder:text-slate-500 focus:border-emerald-400 focus:outline-none" />
+        <button type="submit" class="rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-6 py-3 font-display text-[10px] font-black uppercase tracking-[0.3em] text-black">Update</button>
+      </form>
+    </section>
+
+    <section id="waitlist" class="mt-16 glass rounded-[2rem] p-6 sm:p-8">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="font-display text-[10px] uppercase tracking-[0.35em] text-pink-300">Merch watchlist</p>
+          <h2 class="mt-3 font-display text-3xl font-black uppercase tracking-tight text-white">Get on the list before Drop 01</h2>
+        </div>
+        <div class="w-full max-w-xl">
+          <form id="merchWaitlist" class="flex flex-col gap-3 sm:flex-row">
+            <input id="merchEmail" type="email" required placeholder="you@example.com" class="w-full rounded-full border border-white/10 bg-slate-950/80 px-5 py-3 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none" />
+            <button type="submit" class="rounded-full bg-gradient-to-r from-pink-500 to-violet-500 px-6 py-3 font-display text-[10px] font-black uppercase tracking-[0.3em] text-white">Join</button>
+          </form>
+          <p id="merchStatus" class="mt-3 min-h-[1.25rem] text-sm text-slate-300"></p>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <script>
+    const merchForm = document.getElementById('merchWaitlist');
+    const merchEmail = document.getElementById('merchEmail');
+    const merchStatus = document.getElementById('merchStatus');
+
+    const savedEmail = localStorage.getItem('moth_merch_waitlist_email');
+    if (savedEmail) merchEmail.value = savedEmail;
+
+    merchForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = (merchEmail.value || '').trim().toLowerCase();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!valid) {
+        merchStatus.textContent = 'Please enter a valid email to watch the merch drop.';
+        merchStatus.className = 'mt-3 min-h-[1.25rem] text-sm text-pink-300';
+        return;
+      }
+
+      localStorage.setItem('moth_merch_waitlist_email', email);
+      merchStatus.textContent = 'You are on the merch watchlist. Keep an eye out for Drop 01.';
+      merchStatus.className = 'mt-3 min-h-[1.25rem] text-sm text-cyan-300';
+    });
+
+    const revenueTotalEl = document.getElementById('revenueTotal');
+    const donationTotalEl = document.getElementById('donationTotal');
+    const donationProgressEl = document.getElementById('donationProgress');
+    const impactGoalEl = document.getElementById('impactGoal');
+    const revenueForm = document.getElementById('revenueForm');
+    const revenueInput = document.getElementById('revenueInput');
+    const SOLAR_GOAL = 25000;
+    const DONATION_RATE = 0.12;
+
+    function formatMoney(value) {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value || 0);
+    }
+
+    function syncImpact() {
+      const stored = Number(localStorage.getItem('moth_impact_revenue') || '0');
+      const totalRevenue = Number.isFinite(stored) ? stored : 0;
+      const donation = totalRevenue * DONATION_RATE;
+      const progress = Math.min((donation / SOLAR_GOAL) * 100, 100);
+
+      revenueTotalEl.textContent = formatMoney(totalRevenue);
+      donationTotalEl.textContent = formatMoney(donation);
+      donationProgressEl.style.width = progress + '%';
+      impactGoalEl.textContent = formatMoney(SOLAR_GOAL);
+    }
+
+    revenueForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = Number(revenueInput.value || 0);
+      if (!Number.isFinite(value) || value <= 0) return;
+      const previous = Number(localStorage.getItem('moth_impact_revenue') || '0');
+      const next = previous + value;
+      localStorage.setItem('moth_impact_revenue', String(next));
+      revenueInput.value = '';
+      syncImpact();
+    });
+
+    syncImpact();
+  </script>
 </body>
 </html>

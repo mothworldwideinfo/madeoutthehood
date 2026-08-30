@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOTH Careers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050816;
+      --panel: rgba(15, 23, 42, 0.8);
+      --line: rgba(148, 163, 184, 0.2);
+      --cyan: #22d3ee;
+      --violet: #8b5cf6;
+      --pink: #ff4db8;
+      --text: #e5edf7;
+      --muted: #9aa9bf;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(34,211,238,.12), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,.18), transparent 35%),
+        linear-gradient(180deg, #050816 0%, #0b1120 38%, #030712 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .font-display { font-family: Orbitron, system-ui, sans-serif; }
+    .glass { background: rgba(15, 23, 42, 0.7); border: 1px solid var(--line); backdrop-filter: blur(14px); }
+  </style>
+</head>
+<body class="text-white">
+  <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <a href="./index.html" class="font-display text-xs uppercase tracking-[0.35em] text-cyan-300">MOTH EMPIRE</a>
+      <nav class="hidden items-center gap-6 text-[10px] uppercase tracking-[0.25em] text-slate-300 md:flex">
+        <a href="./game.html">Game</a>
+        <a href="./index-3.html">Demo</a>
+        <a href="./shop.html">Shop</a>
+        <a href="./careers.html" class="text-cyan-300">Careers</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
+    <section class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <div class="glass rounded-[2rem] p-6 sm:p-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-cyan-300">Careers</p>
+        <h1 class="mt-4 font-display text-4xl font-black uppercase tracking-tight text-white">Join the empire</h1>
+        <p class="mt-4 text-sm text-slate-300">
+          We are building a culture-led digital brand, and we need operators, creators, and builders across every layer of the business.
+        </p>
+
+        <div class="mt-6 space-y-3">
+          <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
+            <div class="font-display text-[10px] uppercase tracking-[0.25em] text-violet-300">Open roles</div>
+            <ul class="mt-3 space-y-2 text-sm text-slate-300">
+              <li>• Brand & Creative Director</li>
+              <li>• Social Media Manager</li>
+              <li>• Production / Merch Coordinator</li>
+              <li>• Community & Growth Lead</li>
+              <li>• Warehouse / Operations Assistant</li>
+              <li>• Design & Web Intern</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-[2rem] p-6 sm:p-8">
+        <p class="font-display text-[10px] uppercase tracking-[0.35em] text-pink-300">Application form</p>
+        <form id="careersForm" class="mt-5 grid gap-4">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="text-sm text-slate-300">
+              <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Full name</span>
+              <input id="fullName" required class="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none" placeholder="Your name" />
+            </label>
+            <label class="text-sm text-slate-300">
+              <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Email</span>
+              <input id="email" type="email" required class="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none" placeholder="you@example.com" />
+            </label>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="text-sm text-slate-300">
+              <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Role</span>
+              <select id="role" required class="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white focus:border-cyan-400 focus:outline-none">
+                <option value="Brand & Creative Director">Brand & Creative Director</option>
+                <option value="Social Media Manager">Social Media Manager</option>
+                <option value="Production / Merch Coordinator">Production / Merch Coordinator</option>
+                <option value="Community & Growth Lead">Community & Growth Lead</option>
+                <option value="Warehouse / Operations Assistant">Warehouse / Operations Assistant</option>
+                <option value="Design & Web Intern">Design & Web Intern</option>
+              </select>
+            </label>
+            <label class="text-sm text-slate-300">
+              <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Location</span>
+              <input id="location" class="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none" placeholder="City or remote" />
+            </label>
+          </div>
+
+          <label class="text-sm text-slate-300">
+            <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Portfolio or LinkedIn</span>
+            <input id="portfolio" class="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none" placeholder="https://..." />
+          </label>
+
+          <label class="text-sm text-slate-300">
+            <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Short pitch</span>
+            <textarea id="pitch" rows="4" class="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none" placeholder="Tell us why you're a fit..."></textarea>
+          </label>
+
+          <label class="text-sm text-slate-300">
+            <span class="mb-2 block text-[10px] uppercase tracking-[0.25em] text-slate-400">Resume</span>
+            <input id="resume" type="file" accept=".pdf,.doc,.docx" class="w-full rounded-2xl border border-dashed border-cyan-400/40 bg-slate-950/80 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-full file:border-0 file:bg-cyan-400 file:px-4 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-[0.2em] file:text-slate-950" />
+          </label>
+
+          <button type="submit" class="rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 font-display text-[10px] font-black uppercase tracking-[0.3em] text-black">Submit application</button>
+          <p id="careerStatus" class="min-h-[1.25rem] text-sm text-slate-300"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const careersForm = document.getElementById('careersForm');
+    const careerStatus = document.getElementById('careerStatus');
+
+    careersForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const data = {
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        role: document.getElementById('role').value,
+        location: document.getElementById('location').value.trim(),
+        portfolio: document.getElementById('portfolio').value.trim(),
+        pitch: document.getElementById('pitch').value.trim(),
+        resumeName: document.getElementById('resume').files?.[0]?.name || 'No file attached',
+        submittedAt: new Date().toISOString()
+      };
+
+      if (!data.fullName || !data.email || !data.role) {
+        careerStatus.textContent = 'Please complete the required fields before submitting.';
+        careerStatus.className = 'min-h-[1.25rem] text-sm text-pink-300';
+        return;
+      }
+
+      const existing = JSON.parse(localStorage.getItem('moth_careers_applications') || '[]');
+      existing.push(data);
+      localStorage.setItem('moth_careers_applications', JSON.stringify(existing));
+
+      const subject = encodeURIComponent('Application for ' + data.role);
+      const body = encodeURIComponent(
+        'Name: ' + data.fullName + '\n' +
+        'Email: ' + data.email + '\n' +
+        'Role: ' + data.role + '\n' +
+        'Location: ' + (data.location || 'Not provided') + '\n' +
+        'Portfolio: ' + (data.portfolio || 'Not provided') + '\n' +
+        'Pitch: ' + (data.pitch || 'No pitch provided') + '\n' +
+        'Resume: ' + data.resumeName
+      );
+
+      window.location.href = 'mailto:careers@madeoutthehood.org?subject=' + subject + '&body=' + body;
+      careerStatus.textContent = 'Application saved locally and your email client is opening for the final send.';
+      careerStatus.className = 'min-h-[1.25rem] text-sm text-cyan-300';
+      careersForm.reset();
+    });
+  </script>
+</body>
+</html>
