@@ -1,0 +1,266 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>ELEVEN Pink City Empire \uc0\u55356 \u57144 \u55357 \u56960 </title>\
+    <style>\
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');\
+        body \{\
+            font-family: 'Press Start 2P', system-ui;\
+            background: linear-gradient(180deg, #1a0033 0%, #330066 100%);\
+            color: white;\
+            margin: 0;\
+            padding: 0;\
+            min-height: 100vh;\
+            overflow: hidden;\
+        \}\
+        .neon-pink \{ text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; \}\
+        .card \{\
+            background: #1f1233;\
+            border: 3px solid #ff00ff;\
+            border-radius: 12px;\
+            padding: 16px;\
+            transition: all 0.2s;\
+        \}\
+        .card:hover \{\
+            transform: scale(1.05);\
+            border-color: #ff69b4;\
+            box-shadow: 0 0 20px #ff00ff;\
+        \}\
+        #city-grid \{\
+            background: linear-gradient(180deg, #1a0033 0%, #330066 100%);\
+            background-image: \
+                radial-gradient(circle at 20% 30%, rgba(255,0,255,0.3) 0%, transparent 50%),\
+                radial-gradient(circle at 80% 70%, rgba(0,255,255,0.2) 0%, transparent 50%);\
+            border: 4px solid #ff00ff;\
+            position: relative;\
+            overflow: hidden;\
+        \}\
+        .building \{\
+            position: absolute;\
+            font-size: 3.5rem;\
+            transition: all 0.3s;\
+            cursor: pointer;\
+        \}\
+        .sparkle \{\
+            position: absolute;\
+            font-size: 1.5rem;\
+            animation: sparkleAnim 1s forwards;\
+        \}\
+        @keyframes sparkleAnim \{\
+            0% \{ transform: scale(0.5); opacity: 1; \}\
+            100% \{ transform: scale(1.5); opacity: 0; top: -50px; \}\
+        \}\
+    </style>\
+</head>\
+<body>\
+    <div style="max-width: 1200px; margin: 0 auto; padding: 16px;">\
+        <!-- Header -->\
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 3px solid #ff00ff; padding-bottom: 16px;">\
+            <div style="display: flex; align-items: center; gap: 12px;">\
+                <div style="width: 48px; height: 48px; background: #ff00ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">\uc0\u55356 \u57144 </div>\
+                <div>\
+                    <h1 style="font-size: 28px; margin: 0;" class="neon-pink">PINK CITY BUILDER</h1>\
+                    <p style="margin: 0; color: #ff69b4; font-size: 14px;">Build \'95 Fund SPCX \'95 CAT \'95 Solar Empire</p>\
+                </div>\
+            </div>\
+            <div style="display: flex; gap: 20px; font-size: 14px;">\
+                <div>\uc0\u55357 \u56496  <span id="funds">100</span></div>\
+                <div>\uc0\u9728 \u65039  <span id="solar">0</span> MW</div>\
+                <div>\uc0\u55357 \u56960  <span id="spcx">0</span> SPCX</div>\
+            </div>\
+            <button onclick="resetGame()" style="background:#c026d3; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">RESET</button>\
+        </div>\
+\
+        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 20px;">\
+            <!-- Main Game -->\
+            <div>\
+                <div id="city-grid" style="height: 480px; border-radius: 16px; position: relative; cursor: pointer;" onclick="cityClick(event)">\
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:120px; opacity:0.15; pointer-events:none;">\uc0\u55356 \u57305 \u65039 \u55356 \u57144 </div>\
+                </div>\
+\
+                <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">\
+                    <div onclick="buyUnit('rover')" class="card" style="cursor:pointer;">\
+                        <div style="font-size:42px; text-align:center;">\uc0\u55357 \u56960 </div>\
+                        <div style="text-align:center; color:#ff69b4; font-size:12px;">PINK SPACE ROVER</div>\
+                        <div style="text-align:center; font-weight:bold;" id="rover-cost">50</div>\
+                        <div style="font-size:12px; color:#ff99cc; text-align:center;">+ SPCX Funding</div>\
+                        <div style="text-align:center; margin-top:8px;" id="rover-count">0 owned</div>\
+                    </div>\
+\
+                    <div onclick="buyUnit('caterpillar')" class="card" style="cursor:pointer;">\
+                        <div style="font-size:42px; text-align:center;">\uc0\u55357 \u56347 </div>\
+                        <div style="text-align:center; color:#ff69b4; font-size:12px;">PINK CATERPILLAR</div>\
+                        <div style="text-align:center; font-weight:bold;" id="cat-cost">30</div>\
+                        <div style="font-size:12px; color:#ff99cc; text-align:center;">+ Solar & Infra</div>\
+                        <div style="text-align:center; margin-top:8px;" id="cat-count">0 owned</div>\
+                    </div>\
+\
+                    <div onclick="buildStructure('solar-farm')" class="card" style="cursor:pointer;">\
+                        <div style="font-size:42px; text-align:center; color:#22c55e;">\uc0\u9728 \u65039 </div>\
+                        <div style="text-align:center; color:#22c55e; font-size:12px;">SOLAR FARM</div>\
+                        <div style="text-align:center; font-weight:bold;" id="solar-cost">100</div>\
+                    </div>\
+\
+                    <div onclick="buildStructure('space-hub')" class="card" style="cursor:pointer;">\
+                        <div style="font-size:42px; text-align:center; color:#a855f7;">\uc0\u55357 \u57072 \u65039 </div>\
+                        <div style="text-align:center; color:#a855f7; font-size:12px;">SPACE HUB</div>\
+                        <div style="text-align:center; font-weight:bold;" id="hub-cost">200</div>\
+                    </div>\
+                </div>\
+            </div>\
+\
+            <!-- Sidebar -->\
+            <div style="display: flex; flex-direction: column; gap: 20px;">\
+                <div class="card">\
+                    <h2 style="color:#ff69b4; margin-top:0;">EMPIRE STATS</h2>\
+                    <div style="font-size:14px; line-height:1.8;">\
+                        <div>Power: <span id="total-power" style="color:#22c55e;">0 MW</span></div>\
+                        <div>SPCX Funded: <span id="total-spcx" style="color:#a855f7;">0</span></div>\
+                        <div>CAT Built: <span id="total-cat" style="color:#eab308;">0</span></div>\
+                    </div>\
+                    <div style="margin-top:16px; font-size:11px; color:#ff99cc;">\
+                        Pink Rovers \uc0\u8594  SPCX<br>\
+                        Pink Caterpillars \uc0\u8594  CAT + Solar\
+                    </div>\
+                </div>\
+\
+                <div class="card">\
+                    <h2 style="color:#ff69b4; margin-top:0;">PINK UPGRADES</h2>\
+                    <div onclick="buyUpgrade('neon')" id="upgrade-neon" style="padding:12px; background:#2a1a4d; margin-bottom:12px; cursor:pointer; border:2px dashed #ff69b4;">\
+                        NEON PINK BOOST<br><span style="font-size:11px;">+50% (500)</span>\
+                    </div>\
+                    <div onclick="buyUpgrade('butterfly')" id="upgrade-butterfly" style="padding:12px; background:#2a1a4d; cursor:pointer; border:2px dashed #ff69b4;">\
+                        BUTTERFLY AURA<br><span style="font-size:11px;">x2.5 (1200)</span>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+\
+        <div style="text-align:center; margin-top:30px; font-size:12px; color:#ff99cc;">\
+            ELEVEN Empire \'95 Free Pink City Builder \'95 Progress Auto-Saves\
+        </div>\
+    </div>\
+\
+    <script>\
+        let funds = 100, solar = 0, spcx = 0, rovers = 0, cats = 0, multiplier = 1;\
+        let totalPower = 0, totalSPCX = 0, totalCAT = 0;\
+        let buildings = [];\
+\
+        function updateUI() \{\
+            document.getElementById('funds').textContent = Math.floor(funds);\
+            document.getElementById('solar').textContent = Math.floor(solar);\
+            document.getElementById('spcx').textContent = Math.floor(spcx);\
+            document.getElementById('rover-count').textContent = rovers + " owned";\
+            document.getElementById('cat-count').textContent = cats + " owned";\
+            document.getElementById('rover-cost').textContent = Math.ceil(50 * Math.pow(1.15, rovers));\
+            document.getElementById('cat-cost').textContent = Math.ceil(30 * Math.pow(1.15, cats));\
+            document.getElementById('solar-cost').textContent = Math.ceil(100 * Math.pow(1.2, buildings.filter(b=>b==='solar').length));\
+            document.getElementById('hub-cost').textContent = Math.ceil(200 * Math.pow(1.2, buildings.filter(b=>b==='hub').length));\
+            document.getElementById('total-power').textContent = Math.floor(totalPower) + " MW";\
+            document.getElementById('total-spcx').textContent = Math.floor(totalSPCX);\
+            document.getElementById('total-cat').textContent = Math.floor(totalCAT);\
+        \}\
+\
+        function addBuilding(type) \{\
+            const grid = document.getElementById('city-grid');\
+            const b = document.createElement('div');\
+            b.className = 'building';\
+            b.style.left = (Math.random() * 75 + 12) + '%';\
+            b.style.top = (Math.random() * 65 + 15) + '%';\
+            b.textContent = type === 'solar' ? '\uc0\u9728 \u65039 ' : '\u55357 \u57072 \u65039 ';\
+            grid.appendChild(b);\
+            buildings.push(type);\
+        \}\
+\
+        function buyUnit(type) \{\
+            if (type === 'rover') \{\
+                const cost = Math.ceil(50 * Math.pow(1.15, rovers));\
+                if (funds >= cost) \{ funds -= cost; rovers++; totalSPCX += 5; \}\
+            \} else \{\
+                const cost = Math.ceil(30 * Math.pow(1.15, cats));\
+                if (funds >= cost) \{ funds -= cost; cats++; totalCAT += 3; \}\
+            \}\
+            updateUI();\
+        \}\
+\
+        function buildStructure(type) \{\
+            let cost = type === 'solar-farm' ? Math.ceil(100 * Math.pow(1.2, buildings.filter(b=>b==='solar').length)) : Math.ceil(200 * Math.pow(1.2, buildings.filter(b=>b==='hub').length));\
+            if (funds >= cost) \{\
+                funds -= cost;\
+                if (type === 'solar-farm') \{\
+                    solar += 25; totalPower += 25;\
+                    addBuilding('solar');\
+                \} else \{\
+                    spcx += 10; totalSPCX += 15;\
+                    addBuilding('hub');\
+                \}\
+            \}\
+            updateUI();\
+        \}\
+\
+        function buyUpgrade(type) \{\
+            if (type === 'neon' && funds >= 500) \{\
+                funds -= 500; multiplier = 1.5;\
+                document.getElementById('upgrade-neon').style.opacity = '0.5';\
+                alert("\uc0\u55356 \u57144  NEON PINK BOOST ACTIVATED!");\
+            \} else if (type === 'butterfly' && funds >= 1200) \{\
+                funds -= 1200; multiplier = 2.5;\
+                document.getElementById('upgrade-butterfly').style.opacity = '0.5';\
+                alert("\uc0\u55358 \u56715  BUTTERFLY TATTOO AURA UNLOCKED!");\
+            \}\
+            updateUI();\
+        \}\
+\
+        function cityClick(e) \{\
+            if (Math.random() < 0.4) \{\
+                funds += 12;\
+                const s = document.createElement('div');\
+                s.className = 'sparkle';\
+                s.textContent = '\uc0\u55357 \u56462 ';\
+                s.style.left = e.offsetX + 'px';\
+                s.style.top = e.offsetY + 'px';\
+                document.getElementById('city-grid').appendChild(s);\
+                setTimeout(() => s.remove(), 1200);\
+                updateUI();\
+            \}\
+        \}\
+\
+        function gameLoop() \{\
+            funds += (rovers * 1.2 + cats * 0.9) * multiplier * 0.7;\
+            solar += cats * 2 * multiplier * 0.08;\
+            spcx += rovers * 0.7 * multiplier * 0.1;\
+            totalPower = solar;\
+            totalSPCX += rovers * 0.04;\
+            totalCAT += cats * 0.07;\
+            updateUI();\
+        \}\
+\
+        function resetGame() \{\
+            if (confirm("Reset Pink Empire?")) location.reload();\
+        \}\
+\
+        // Auto save / load\
+        window.onload = () => \{\
+            const saved = localStorage.getItem('pinkEmpireFree');\
+            if (saved) \{\
+                const d = JSON.parse(saved);\
+                Object.assign(window, d);\
+            \}\
+            updateUI();\
+            setInterval(() => \{\
+                gameLoop();\
+                localStorage.setItem('pinkEmpireFree', JSON.stringify(\{funds, solar, spcx, rovers, cats, multiplier, totalPower, totalSPCX, totalCAT, buildings\}));\
+            \}, 900);\
+        \};\
+    </script>\
+</body>\
+</html>}

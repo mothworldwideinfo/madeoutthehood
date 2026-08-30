@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MOTH • Live Portfolio | Made Out The Hood</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --void: #0a0a0c;
+    --panel: #121216;
+    --panel-2: #19191f;
+    --border: #2a2a33;
+    --text: #e8e6e9;
+    --text-dim: #8c8a93;
+    --pink: #ff2f7e;
+    --pink-dim: #d1246a;
+    --green: #3ddc84;
+    --red: #ff4d4d;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background: var(--void);
+    color: var(--text);
+  }
+  a { color: inherit; text-decoration: none; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--void);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .brand {
+    font-family: var(--mono);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 14px;
+  }
+  .brand .accent { color: var(--pink); }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
+  .nav-links a:hover { color: var(--pink); }
+
+  .status-line {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--pink);
+    padding: 10px 0 0;
+    text-transform: uppercase;
+  }
+
+  main { padding: 28px; max-width: 1400px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--pink);
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+  h1.page-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 0 0 24px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    min-height: 560px;
+  }
+  .sidebar {
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .sidebar h2, .signup-panel h2, .holdings-section h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin: 0 0 12px;
+  }
+  .search-row { margin-bottom: 14px; }
+  select, input[type=text], input[type=email] {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 100%;
+    font-family: var(--sans);
+  }
+  select:focus, input:focus {
+    outline: none;
+    border-color: var(--pink);
+  }
+  .asset-type-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+  .asset-type-tabs button {
+    flex: 1;
+    padding: 7px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .asset-type-tabs button.active {
+    background: var(--pink);
+    color: var(--void);
+    border-color: var(--pink);
+    font-weight: 700;
+  }
+  button.primary {
+    background: var(--pink);
+    color: var(--void);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  button.primary:hover { background: var(--pink-dim); }
+
+  .watchlist-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    border: 1px solid transparent;
+  }
+  .watchlist-item:hover { background: var(--panel-2); }
+  .watchlist-item.active { background: var(--panel-2); border-color: var(--pink); }
+  .watchlist-item .sym { font-weight: 600; font-size: 13px; font-family: var(--mono); }
+  .watchlist-item .exch { font-size: 11px; color: var(--text-dim); }
+  .watchlist-item .remove {
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 2px 6px;
+  }
+  .watchlist-item .remove:hover { color: var(--red); }
+  .empty-hint { color: var(--text-dim); font-size: 12px; padding: 10px 8px; font-family: var(--mono); }
+
+  .main-panel { display: flex; flex-direction: column; background: var(--panel); }
+  .chart-wrap { flex: 1; min-height: 460px; }
+
+  .signup-panel {
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    background: var(--panel-2);
+  }
+  .signup-panel p {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin: 0 0 14px;
+  }
+  .signup-row { display: flex; gap: 10px; max-width: 480px; }
+  .status-msg { margin-top: 10px; font-size: 12px; font-family: var(--mono); }
+  .status-msg.ok { color: var(--green); }
+  .status-msg.err { color: var(--red); }
+
+  .holdings-section {
+    margin-top: 28px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--panel);
+    padding: 20px 24px;
+  }
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.data-table th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.data-table td {
+    padding: 10px 6px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+  table.data-table tr:last-child td { border-bottom: none; }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">MOTH <span class="accent">EMPIRE</span></div>
+  <div class="nav-links">
+    <a href="#impact">Impact</a>
+    <a href="#watchlist">Watchlist</a>
+    <a href="#portfolio-builder">Portfolio</a>
+    <a href="#live-portfolio">Live Signal</a>
+  </div>
+</nav>
+<div class="status-line">// SYS.ONLINE — LIVE_SIGNAL_MODULE //</div>
+
+<main>
+  <p class="eyebrow">// live_signal //</p>
+  <h1 class="page-title" id="live-portfolio">Live Portfolio Tracker</h1>
+  <p class="page-sub">Free real-time charts across stocks and crypto. Build a watchlist, get it emailed to you daily — no account required.</p>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Add to watchlist</h2>
+      <div class="asset-type-tabs">
+        <button class="active" data-type="stock" onclick="setAssetType('stock')">Stocks</button>
+        <button data-type="crypto" onclick="setAssetType('crypto')">Crypto</button>
+      </div>
+
+      <div class="search-row">
+        <select id="exchangeSelect"></select>
+      </div>
+      <div class="search-row">
+        <input type="text" id="symbolInput" placeholder="e.g. AAPL or BTCUSDT" />
+      </div>
+      <button class="primary" style="width:100%; margin-bottom:20px;" onclick="addSymbol()">Add symbol</button>
+
+      <h2>Your watchlist</h2>
+      <div id="watchlist"></div>
+    </aside>
+
+    <div class="main-panel">
+      <div class="chart-wrap" id="chartWrap"></div>
+
+      <div class="signup-panel">
+        <h2>Get this portfolio in your inbox — free</h2>
+        <p>Daily email with live prices and P&amp;L for everything in your watchlist above.</p>
+        <div class="signup-row">
+          <input type="email" id="emailInput" placeholder="you@example.com" />
+          <button class="primary" onclick="submitSignup()">Send daily updates</button>
+        </div>
+        <div id="signupStatus" class="status-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="holdings-section">
+    <h2>Watchlist snapshot</h2>
+    <table class="data-table" id="snapshotTable">
+      <thead>
+        <tr><th>Symbol</th><th>Exchange</th><th>Type</th><th></th></tr>
+      </thead>
+      <tbody id="snapshotBody">
+        <tr><td colspan="4" style="color: var(--text-dim); font-family: var(--sans);">No holdings yet. Add a symbol above.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer>
+  MOTH EMPIRE — Made Out The Hood // Charts via TradingView. Not financial advice.
+</footer>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+  const EXCHANGES = {
+    stock: [
+      { label: "NASDAQ", value: "NASDAQ" },
+      { label: "NYSE", value: "NYSE" },
+      { label: "AMEX", value: "AMEX" },
+      { label: "LSE (London)", value: "LSE" },
+      { label: "TSX (Toronto)", value: "TSX" },
+      { label: "ASX (Australia)", value: "ASX" }
+    ],
+    crypto: [
+      { label: "Binance", value: "BINANCE" },
+      { label: "Coinbase", value: "COINBASE" },
+      { label: "Kraken", value: "KRAKEN" },
+      { label: "Bitstamp", value: "BITSTAMP" }
+    ]
+  };
+
+  let currentType = "stock";
+  let watchlist = [];
+  let activeSymbol = null;
+
+  function setAssetType(type) {
+    currentType = type;
+    document.querySelectorAll(".asset-type-tabs button").forEach(b => {
+      b.classList.toggle("active", b.dataset.type === type);
+    });
+    populateExchanges();
+    document.getElementById("symbolInput").placeholder =
+      type === "stock" ? "e.g. AAPL, MSFT, TSLA" : "e.g. BTCUSDT, ETHUSDT";
+  }
+
+  function populateExchanges() {
+    const sel = document.getElementById("exchangeSelect");
+    sel.innerHTML = "";
+    EXCHANGES[currentType].forEach(ex => {
+      const opt = document.createElement("option");
+      opt.value = ex.value;
+      opt.textContent = ex.label;
+      sel.appendChild(opt);
+    });
+  }
+
+  function addSymbol() {
+    const symbolRaw = document.getElementById("symbolInput").value.trim().toUpperCase();
+    const exchange = document.getElementById("exchangeSelect").value;
+    if (!symbolRaw) return;
+
+    const tvSymbol = `${exchange}:${symbolRaw}`;
+    if (watchlist.some(w => w.tvSymbol === tvSymbol)) {
+      document.getElementById("symbolInput").value = "";
+      return;
+    }
+
+    const entry = { symbol: symbolRaw, exchange, type: currentType, tvSymbol };
+    watchlist.push(entry);
+    document.getElementById("symbolInput").value = "";
+    renderWatchlist();
+    renderSnapshot();
+    selectSymbol(entry);
+
+    // TODO: POST to your backend, e.g.:
+    // fetch('https://YOUR_API_GATEWAY_URL/watchlist', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ email: currentUserEmail, ...entry })
+    // });
+  }
+
+  function removeSymbol(tvSymbol) {
+    watchlist = watchlist.filter(w => w.tvSymbol !== tvSymbol);
+    renderWatchlist();
+    renderSnapshot();
+    if (activeSymbol === tvSymbol && watchlist.length) {
+      selectSymbol(watchlist[0]);
+    } else if (!watchlist.length) {
+      activeSymbol = null;
+      document.getElementById("chartWrap").innerHTML =
+        '<div class="empty-hint" style="padding:40px;">Add a symbol to see its chart.</div>';
+    }
+  }
+
+  function renderWatchlist() {
+    const container = document.getElementById("watchlist");
+    if (!watchlist.length) {
+      container.innerHTML = '<div class="empty-hint">Nothing yet — add a stock or crypto symbol above.</div>';
+      return;
+    }
+    container.innerHTML = "";
+    watchlist.forEach(w => {
+      const row = document.createElement("div");
+      row.className = "watchlist-item" + (w.tvSymbol === activeSymbol ? " active" : "");
+      row.innerHTML = `
+        <div onclick='selectSymbol(${JSON.stringify(w)})' style="flex:1; cursor:pointer;">
+          <div class="sym">${w.symbol}</div>
+          <div class="exch">${w.exchange} · ${w.type}</div>
+        </div>
+        <button class="remove" onclick="removeSymbol('${w.tvSymbol}')">&times;</button>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  function renderSnapshot() {
+    const body = document.getElementById("snapshotBody");
+    if (!watchlist.length) {
+      body.innerHTML = '<tr><td colspan="4" style="color: var(--text-dim); font-family: var(--sans);">No holdings yet. Add a symbol above.</td></tr>';
+      return;
+    }
+    body.innerHTML = "";
+    watchlist.forEach(w => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${w.symbol}</td>
+        <td>${w.exchange}</td>
+        <td>${w.type}</td>
+        <td><button class="remove" style="font-family: var(--mono);" onclick="removeSymbol('${w.tvSymbol}')">remove</button></td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+
+  function selectSymbol(entry) {
+    activeSymbol = entry.tvSymbol;
+    renderWatchlist();
+    document.getElementById("chartWrap").innerHTML = '<div id="tv_chart" style="width:100%; height:100%;"></div>';
+    new TradingView.widget({
+      autosize: true,
+      symbol: entry.tvSymbol,
+      interval: "D",
+      timezone: "Etc/UTC",
+      theme: "dark",
+      style: "1",
+      locale: "en",
+      toolbar_bg: "#121216",
+      enable_publishing: false,
+      allow_symbol_change: true,
+      container_id: "tv_chart"
+    });
+  }
+
+  function submitSignup() {
+    const email = document.getElementById("emailInput").value.trim();
+    const statusEl = document.getElementById("signupStatus");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+      statusEl.textContent = "Enter a valid email address first.";
+      statusEl.className = "status-msg err";
+      return;
+    }
+    if (!watchlist.length) {
+      statusEl.textContent = "Add at least one symbol to your watchlist first.";
+      statusEl.className = "status-msg err";
+      return;
+    }
+
+    // TODO: replace with your real API Gateway endpoint.
+    // fetch('https://YOUR_API_GATEWAY_URL/signup', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ email, watchlist })
+    // })
+    //   .then(r => r.json())
+    //   .then(() => {
+    //     statusEl.textContent = "You're signed up. Daily portfolio emails start tomorrow.";
+    //     statusEl.className = "status-msg ok";
+    //   })
+    //   .catch(() => {
+    //     statusEl.textContent = "Something went wrong. Try again.";
+    //     statusEl.className = "status-msg err";
+    //   });
+
+    statusEl.textContent = `Ready to save ${email} with ${watchlist.length} symbol(s) — connect the backend to make this live.`;
+    statusEl.className = "status-msg ok";
+  }
+
+  populateExchanges();
+  renderWatchlist();
+  renderSnapshot();
+  document.getElementById("chartWrap").innerHTML =
+    '<div class="empty-hint" style="padding:40px;">Add a symbol to see its chart.</div>';
+</script>
+
+</body>
+</html>
